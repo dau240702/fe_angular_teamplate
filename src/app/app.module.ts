@@ -1,30 +1,41 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FooterComponent } from './shared/footer/footer.component';
-import { HomeComponent } from './pages/home/home.component';
-import { AboutComponent } from './pages/about/about.component';
-import{ServiceComponent} from './pages/service/service.component'
-import { HeaderComponent } from './shared/header/header.component';
-
+import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
+import {
+  DateAdapter,
+  MAT_DATE_FORMATS,
+  MAT_DATE_LOCALE,
+} from '@angular/material/core';
+import { LoginComponent } from './login/login.component';
+import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from '@angular/router';
+import { AppRoutingModule } from './app-routing.module';
 @NgModule({
   declarations: [
     AppComponent,
-    FooterComponent,
-    HomeComponent,
-    HeaderComponent,
-    AboutComponent,
-    ServiceComponent
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
+    RouterModule,
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
     AppRoutingModule
   ],
   providers: [
-    provideClientHydration()
+    provideHttpClient(withFetch()),
+    { provide: MAT_DATE_FORMATS, useValue: MAT_DATE_LOCALE },
+    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+    JwtHelperService,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

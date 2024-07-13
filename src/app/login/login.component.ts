@@ -73,4 +73,14 @@ export class LoginComponent implements OnInit {
     console.error(error);
     return throwError(error);
   }
+get usernameControl() {
+  return this.loginForm.get('username');
+}
+get passwordControl() {
+  return this.loginForm.get('password');
+}
+isFieldInvalid(fieldName: string): boolean {
+  const control = this.loginForm.get(fieldName);
+  return control ? control.invalid && (control.dirty || control.touched) : false;
+}
 }
