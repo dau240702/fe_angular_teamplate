@@ -40,50 +40,19 @@
                 "glob": "**/*.svg",
                 "input": "node_modules/ionicons/dist/ionicons/svg",
                 "output": "./svg"
-              },
-              {
-                "glob": "**/*.svg",
-                "input": "node_modules/ionicons/dist/ionicons/svg",
-                "output": "./svg"
               }
             ],
-            "styles": [
-              "src/styles.css",
-              {
-                "input": "node_modules/@ionic/angular/css/core.css"
-              },
-              {
-                "input": "node_modules/@ionic/angular/css/normalize.css"
-              },
-              {
-                "input": "node_modules/@ionic/angular/css/structure.css"
-              },
-              {
-                "input": "node_modules/@ionic/angular/css/typography.css"
-              },
-              {
-                "input": "node_modules/@ionic/angular/css/display.css"
-              },
-              {
-                "input": "node_modules/@ionic/angular/css/padding.css"
-              },
-              {
-                "input": "node_modules/@ionic/angular/css/float-elements.css"
-              },
-              {
-                "input": "node_modules/@ionic/angular/css/text-alignment.css"
-              },
-              {
-                "input": "node_modules/@ionic/angular/css/text-transformation.css"
-              },
-              {
-                "input": "node_modules/@ionic/angular/css/flex-utils.css"
-              },
-              {
-                "input": "src/theme/variables.css"
-              }
+            "styles": ["src/styles.css",
+            "src/assets/user/vendor/bootstrap/css/bootstrap.min.css",
+            "src/assets/user/vendor/bootstrap-icons/bootstrap-icons.css",
+            "src/assets/user/vendor/aos/aos.css",
+            "src/assets/user/vendor/glightbox/css/glightbox.min.css",
+            "src/assets/user/vendor/swiper/swiper-bundle.min.css",
+            "src/assets/user/vendor/remixicon/remixicon.css",
+            "src/assets/user/css/main.css"
             ],
-            "scripts": []
+            "scripts": [
+            ]
           },
           "configurations": {
             "production": {
@@ -136,11 +105,6 @@
               {
                 "glob": "**/*",
                 "input": "public"
-              },
-              {
-                "glob": "**/*.svg",
-                "input": "node_modules/ionicons/dist/ionicons/svg",
-                "output": "./svg"
               }
             ],
             "styles": [
@@ -148,46 +112,11 @@
             ],
             "scripts": []
           }
-        },
-        "ionic-cordova-serve": {
-          "builder": "@ionic/angular-toolkit:cordova-serve",
-          "options": {
-            "cordovaBuildTarget": "fe_angular_teamplate:ionic-cordova-build",
-            "devServerTarget": "fe_angular_teamplate:serve"
-          },
-          "configurations": {
-            "production": {
-              "cordovaBuildTarget": "fe_angular_teamplate:ionic-cordova-build:production",
-              "devServerTarget": "fe_angular_teamplate:serve:production"
-            }
-          }
-        },
-        "ionic-cordova-build": {
-          "builder": "@ionic/angular-toolkit:cordova-build",
-          "options": {
-            "browserTarget": "fe_angular_teamplate:build"
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "fe_angular_teamplate:build:production"
-            }
-          }
         }
       }
     }
   },
   "cli": {
-    "analytics": "382ea651-70a8-4f58-b10f-35116a1d3c59",
-    "schematicCollections": [
-      "@ionic/angular-toolkit"
-    ]
-  },
-  "schematics": {
-    "@ionic/angular-toolkit:component": {
-      "styleext": "scss"
-    },
-    "@ionic/angular-toolkit:page": {
-      "styleext": "scss"
-    }
+    "analytics": "382ea651-70a8-4f58-b10f-35116a1d3c59"
   }
 }

@@ -15,7 +15,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
-import { IonicModule } from '@ionic/angular';
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +31,6 @@ import { IonicModule } from '@ionic/angular';
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
-    IonicModule.forRoot({}),
   ],
   providers: [
     provideHttpClient(withFetch()),
