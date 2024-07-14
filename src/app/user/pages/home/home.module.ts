@@ -4,12 +4,15 @@ import { FormsModule } from '@angular/forms';
 import { HomeComponent } from './home.component';
 
 @NgModule({
-  declarations: [HomeComponent],
+  declarations: [
+    HomeComponent,
+  ],
   imports: [
     FormsModule,
     CommonModule,
 
-  ],
+  ], 
+
   exports: [HomeComponent],
 })
 export class HomeAppModule {}

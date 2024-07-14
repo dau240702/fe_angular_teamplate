@@ -19,12 +19,12 @@ export class AppComponent implements OnInit {
     if (isPlatformBrowser(this.platformId)) {
       this.router.events.subscribe((event) => {
         if (event instanceof NavigationEnd) {
-          if (event.url.startsWith('/admin')) {
-            this.loadAdminStyles();
-            this.loadAdminScripts();
-          } else {
+          if (event.url.startsWith('/user')) {
             this.loadUserStyles();
             this.loadUserScripts();
+          } else if(event.url.startsWith('/admin'))  {
+            this.loadAdminStyles();
+            this.loadAdminScripts();
           }
         }
       });
@@ -53,7 +53,6 @@ export class AppComponent implements OnInit {
       'assets/user/vendor/swiper/swiper-bundle.min.css',
       'assets/user/vendor/remixicon/remixicon.css',
       'assets/user/css/main.css'
-
     );
   }
 

@@ -3,10 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '../service/authguard.service';
 import { LoginComponent } from './login/login.component';
 import { MainLayoutModule } from './admin/pages/main-layout/main-layout.module';
-import { AppLayoutComponent } from './pages/app-layout/app-layout.component';
-import { AppLayoutModule } from './pages/app-layout/app-layout.module';
-
-
+import { AppLayoutComponent } from './user/pages/app-layout/app-layout.component';
+import { AppLayoutModule } from './user/pages/app-layout/app-layout.module';
 
 const routes: Routes = [
   { path: '', redirectTo: '', pathMatch: 'full' },
@@ -22,7 +20,7 @@ const routes: Routes = [
   {
     path: '',
     component: AppLayoutComponent,
-  }
+  },
 ];
 
 @NgModule({
@@ -33,4 +31,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

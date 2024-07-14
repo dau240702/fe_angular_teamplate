@@ -15,10 +15,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
+import { IonicModule } from '@ionic/angular';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
+    
+    
   ],
   imports: [
     BrowserModule,
@@ -28,7 +31,8 @@ import { AppRoutingModule } from './app-routing.module';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    IonicModule.forRoot({}),
   ],
   providers: [
     provideHttpClient(withFetch()),
