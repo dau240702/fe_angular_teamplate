@@ -9,12 +9,14 @@ import {
   MAT_DATE_LOCALE,
 } from '@angular/material/core';
 import { LoginComponent } from './login/login.component';
-import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
+import { HttpClientModule, provideHttpClient, withFetch ,withInterceptors} from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
+import { authInterceptor } from '../service/auth/AuthInterceptor.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,7 +35,7 @@ import { AppRoutingModule } from './app-routing.module';
     AppRoutingModule,
   ],
   providers: [
-    provideHttpClient(withFetch()),
+    provideHttpClient(withInterceptors([authInterceptor])),
     { provide: MAT_DATE_FORMATS, useValue: MAT_DATE_LOCALE },
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
     JwtHelperService,
