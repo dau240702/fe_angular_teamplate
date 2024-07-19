@@ -10,8 +10,8 @@
 
         <nav id="navbar" class="navbar">
             <ul>
-                <li><a routerLink="/" routerLinkActive="active" ariaCurrentWhenActive="page">Trang chủ</a></li>
-                <li><a routerLink="/about" routerLinkActive="active" ariaCurrentWhenActive="page">Giới Thiệu</a></li>
+                <li><a (click)="navigateTo('/')" [class.active]="isActive('/')">Trang chủ</a></li>
+                <li><a (click)="navigateTo('/about')" [class.active]="isActive('/about')">Giới Thiệu</a></li>
                 <li><a routerLink="/service" routerLinkActive="active" ariaCurrentWhenActive="page">Dịch Vụ</a></li>
                 <li><a routerLink="/product" routerLinkActive="active" ariaCurrentWhenActive="page">Sản Phẩm</a></li>
                 <li><a routerLink="/blog" routerLinkActive="active" ariaCurrentWhenActive="page">Tin Tức</a></li>

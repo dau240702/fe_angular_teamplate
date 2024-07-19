@@ -17,6 +17,13 @@
         </li>
         <!-- End Post -->
         <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" (click)="navigateTo('/admin/category-management')" [class.active]="isActive('/admin/category-management')">
+                <i class="bi bi-menu-button-wide"></i><span>Quản lý loai</span>
+            </a>
+        </li>
+                <!-- End Category Nav -->
+
+        <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" (click)="navigateTo('/admin/product-management')" [class.active]="isActive('/admin/product-management')">
                 <i class="bi bi-menu-button-wide"></i><span>Quản lý sản phẩm</span>
             </a>
@@ -38,8 +45,8 @@
         <!-- End Infomation -->
 
         <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-box-arrow-right"></i><span>Đăng xuất</span>
+            <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" >
+                <i class="bi bi-box-arrow-right"></i><span (click)="Logout()">Đăng xuất</span>
             </a>
         </li>
         <!-- End Logout -->

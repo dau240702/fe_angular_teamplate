@@ -19,6 +19,14 @@ export class HeaderComponent implements OnInit {
     private userService: UserService,){
 
   }
+
+  navigateTo(path: string) {
+    this.router.navigate([path]);
+  }
+
+  isActive(path: string): boolean {
+    return this.router.isActive(path, true);
+  }
   ngOnInit(): void {
     this.userService.initializeUserFromToken();
     this.userService.name$.subscribe(name => {
