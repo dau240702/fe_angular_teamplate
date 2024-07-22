@@ -1,64 +1,128 @@
 <div class="pagetitle">
-    <h1>Quản lý loai</h1>
+    <h1>Quản lý thể loại</h1>
 </div>
-<!-- End Page Title -->
 
-<section class="section">
+<!-- Button to open modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModaladd" data-bs-whatever="@mdo">
+  <i class="bi bi-plus"></i> Thêm Thể loại
+</button>
+
+<!-- Modal for adding category -->
+<div class="modal fade" id="exampleModaladd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Thêm thể loại</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="addCategoryForm" *ngIf="this.addCategoryForm">
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Tên thể loại:</label >
+            <input
+              type="text"
+              class="form-control"
+              id="recipient-name"
+              formControlName="name"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Mô tả:</label>
+                        <textarea class="form-control" id="message-text" formControlName="description"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Đóng
+        </button>
+                <button type="button" class="btn btn-primary" (click)="addCategory()">
+          Thêm thể loại
+        </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModaledit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">
+                    Chỉnh sửa thể loại
+                </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="editCategoryForm" *ngIf="this.editCategoryForm">
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Tên thể loại:</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="recipient-name"
+              formControlName="name"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Mô tả:</label>
+                        <textarea class="form-control" id="message-text" formControlName="description"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Đóng
+        </button>
+                <button type="button" class="btn btn-primary" (click)="updateCategory()">
+          Chỉnh sửa thể loại
+        </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="section mt-3">
     <div class="row">
         <div class="col-lg-12">
-
             <div class="card">
                 <div class="card-body">
-                    <!-- Table with stripped rows -->
-                    <table class="table datatable">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Position</th>
-                                <th scope="col">Age</th>
-                                <th scope="col">Start Date</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Brandon Jacob</td>
-                                <td>Designer</td>
-                                <td>28</td>
-                                <td>2016-05-25</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Bridie Kessler</td>
-                                <td>Developer</td>
-                                <td>35</td>
-                                <td>2014-12-05</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Ashleigh Langosh</td>
-                                <td>Finance</td>
-                                <td>45</td>
-                                <td>2011-08-12</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">4</th>
-                                <td>Angus Grady</td>
-                                <td>HR</td>
-                                <td>34</td>
-                                <td>2012-06-11</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">5</th>
-                                <td>Raheem Lehner</td>
-                                <td>Dynamic Division Officer</td>
-                                <td>47</td>
-                                <td>2011-04-19</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <!-- End Table with stripped rows -->
+                    <ngx-datatable class="bootstrap" [rows]="categories" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" [rowClass]="rowClassFunction">
+                        <ngx-datatable-column name="ID">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{ row.categoryId }}
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column name="Tên loại">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{ row.name }}
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column name="Mô tả">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{ row.description }}
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column name="Edit">
+                            <ng-template ngx-datatable-cell-template let-row="row">
+                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModaledit" data-bs-whatever="@mdo" (click)="openEditModal(row)">
+                  <i class="bi bi-pencil-square"></i> Chỉnh sửa
+                </button>
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column name="Delete">
+                            <ng-template ngx-datatable-cell-template let-row="row">
+                                <button class="btn btn-danger" (click)="deleteCategory(row.categoryId)">
+                  <i class="bi bi-x"></i> Xóa
+                </button>
+                            </ng-template>
+                        </ngx-datatable-column>
+                    </ngx-datatable>
                 </div>
             </div>
         </div>
