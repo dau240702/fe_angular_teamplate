@@ -29,6 +29,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ## UI-PAGE
 
 1.Login:
+
 <img src="https://github.com/user-attachments/assets/ea39c719-373f-46d3-9c0a-55c1a6bd9d77" width="200" alt="Hướng dẫn tạo bot Discord">
 
 
