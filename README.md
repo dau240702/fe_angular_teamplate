@@ -26,10 +26,10 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
 
-## Further help
+## UI-PAGE
 
 1.Login:
-![image](https://github.com/user-attachments/assets/ea39c719-373f-46d3-9c0a-55c1a6bd9d77)
+<img src="https://github.com/user-attachments/assets/ea39c719-373f-46d3-9c0a-55c1a6bd9d77" width="200" alt="Hướng dẫn tạo bot Discord">
 
 
 
