@@ -40,6 +40,11 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
    a, Quản lý thể loại
 
+   <img src="https://github.com/user-attachments/assets/8cf36180-47c1-47fe-af73-9d1e97c2444d" width="200" alt="Hướng dẫn tạo bot Discord">
+   <img src="https://github.com/user-attachments/assets/f4c9caf5-fcf7-4a9d-845c-f6645bdf0f42" width="200" alt="Hướng dẫn tạo bot Discord">
+   <img src="https://github.com/user-attachments/assets/f03730b1-7a46-41b9-9410-17f8ed815d00" width="200" alt="Hướng dẫn tạo bot Discord">
+
+
    
 
 
