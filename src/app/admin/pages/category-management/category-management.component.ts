@@ -5,6 +5,7 @@ import { UserService } from '../../../../service/user.service';
 import Swal from 'sweetalert2';
 import { NotificationService } from '../../../../service/Notification/notification.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Category } from '../../../../model/category.model';
 
 @Component({
   selector: 'app-category-management',
@@ -12,12 +13,14 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrl: './category-management.component.css'
 })
 export class CategoryManagementComponent implements OnInit {
-  categories: any[] = [];
   userId: number | null = null;
   addCategoryForm: FormGroup | undefined;
   editCategoryForm: FormGroup ;
   currentCategoryId: number | null = null;
-
+    categories = [
+    { categoryId: 1, name: 'Category 1' },
+  ];
+  parentCategories: Category[] = [];
   @ViewChild('editTemplate', { static: true }) editTemplate: any;
   @ViewChild('deleteTemplate', { static: true }) deleteTemplate: any;
 
@@ -31,24 +34,31 @@ export class CategoryManagementComponent implements OnInit {
   ) {
     this.addCategoryForm = this.fb.group({
       name: ['', Validators.required],
-      description: ['', Validators.required]
+      description: ['', Validators.required],
+      categoryId: [null, Validators.required] 
     });
     this.editCategoryForm = this.fb.group({
       name: ['', Validators.required],
-      description: ['', Validators.required]
+      description: ['', Validators.required],
+      categoryId: [null, Validators.required]  
     });
   }
   addCategory() {
     if (this.addCategoryForm && this.addCategoryForm.valid) {
-      const categoryData = this.addCategoryForm.value;
+      const formValue = this.addCategoryForm.value;
+      const categoryData: Partial<Category> = {
+        name: formValue.name,
+        description: formValue.description,
+        parentId: formValue.categoryId // Sử dụng trực tiếp giá trị categoryId
+      };
+  
       this.apiService.post(ConstService.AddCategory, categoryData).subscribe(
-        (response) => {
+        (response: Category) => {
           this.notificationService.success('Thêm thể loại thành công.');
-          this.categories.push(response);  // Cập nhật danh sách thể loại
-          this.addCategoryForm?.reset();  // Reset form
+          this.loadCategories();
+          this.addCategoryForm?.reset();
           const modalCloseButton = document.querySelector('#exampleModaladd .btn-close') as HTMLElement;
-          modalCloseButton?.click();  // Đóng modal
-          this.loadCategories()
+          modalCloseButton?.click();
         },
         (error) => {
           this.notificationService.error('Có lỗi xảy ra khi thêm thể loại.');
@@ -56,12 +66,36 @@ export class CategoryManagementComponent implements OnInit {
       );
     }
   }
+  isParentCategory(categoryName: string): boolean {
+    return categoryName === 'sản phẩm' || categoryName === 'tin tức';
+  }
+  loadParentCategories() {
+    this.apiService.get(ConstService.GetAllCategory).subscribe(
+      (response: Category[]) => {
+        this.parentCategories = response.filter(category => 
+          category.name === 'sản phẩm' || category.name === 'tin tức'
+        );
+      },
+      (error) => {
+        this.notificationService.error('Có lỗi xảy ra khi tải danh sách thể loại cha.');
+      }
+    );
+  }
+
+  getCategoryName(parentId: number | null): string {
+    if (parentId === null) {
+        return '';
+    }
+    const parentCategory = this.categories.find(cat => cat.categoryId === parentId);
+    return parentCategory ? parentCategory.name : 'Không tìm ts hấy';
+}
 
   ngOnInit(): void {
     this.columns = [
       { prop: 'categoryId', name: 'ID' },
-      { prop: 'name', name: 'Name' },
+      { prop: 'name', name: 'Name' }, 
       { prop: 'description', name: 'Description' },
+      { prop: 'parent', name: 'Thể loại cha' },
       { name: 'Edit', cellTemplate: this.editTemplate },
       { name: 'Delete', cellTemplate: this.deleteTemplate }
     ];
@@ -71,6 +105,8 @@ export class CategoryManagementComponent implements OnInit {
       if (!this.userId && userId) {
         this.userId = userId;
         this.loadCategories();
+        this.loadParentCategories() 
+        
       }
     });
   }
@@ -86,27 +122,33 @@ export class CategoryManagementComponent implements OnInit {
     );
   }
 
-  openEditModal(category: any) {
-    this.currentCategoryId = category.categoryId;
-    this.editCategoryForm.setValue({
-      name: category.name,
-      description: category.description
-    });
+  openEditModal(category: Category) {
+    if (!this.isParentCategory(category.name)) {
+      this.currentCategoryId = category.categoryId;
+      this.editCategoryForm.patchValue({
+        name: category.name,
+        description: category.description,
+        categoryId: category.parentId
+      });
+    }
   }
 
   updateCategory() {
-    if (this.editCategoryForm.valid) {
-      const categoryData = this.editCategoryForm.value;
-      this.apiService.put(`${ConstService.UpdateCategory}/${this.currentCategoryId}`, categoryData).subscribe(
-        (response) => {
-          this.notificationService.success('Chỉnh sửa thể loại thành công.');
-          const index = this.categories.findIndex(category => category.categoryId === this.currentCategoryId);
-          this.categories[index] = response;  // Cập nhật danh sách thể loại
-          this.editCategoryForm.reset();  // Reset form
-          const modalCloseButton = document.querySelector('#exampleModaledit .btn-close') as HTMLElement;
-          modalCloseButton.click();  // Đóng modal
-          this.loadCategories();
+    if (this.editCategoryForm.valid && this.currentCategoryId) {
+      const formValue = this.editCategoryForm.value;
+      const categoryData: Partial<Category> = {
+        name: formValue.name,
+        description: formValue.description,
+        parentId: formValue.categoryId
+      };
 
+      this.apiService.put(`${ConstService.UpdateCategory}/${this.currentCategoryId}`, categoryData).subscribe(
+        (response: Category) => {
+          this.notificationService.success('Chỉnh sửa thể loại thành công.');
+          this.loadCategories();  // Tải lại danh sách thể loại
+          this.editCategoryForm.reset();
+          const modalCloseButton = document.querySelector('#exampleModaledit .btn-close') as HTMLElement;
+          modalCloseButton?.click();  // Đóng modal
         },
         (error) => {
           this.notificationService.error('Có lỗi xảy ra khi chỉnh sửa thể loại.');

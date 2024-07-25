@@ -3,8 +3,9 @@
 </div>
 
 <!-- Button to open modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModaladd" data-bs-whatever="@mdo">
-  <i class="bi bi-plus"></i> Thêm Thể loại
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModaladd"
+    data-bs-whatever="@mdo">
+    <i class="bi bi-plus"></i> Thêm Thể loại
 </button>
 
 <!-- Modal for adding category -->
@@ -18,27 +19,31 @@
             <div class="modal-body">
                 <form [formGroup]="addCategoryForm" *ngIf="this.addCategoryForm">
                     <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">Tên thể loại:</label >
-            <input
-              type="text"
-              class="form-control"
-              id="recipient-name"
-              formControlName="name"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="message-text" class="col-form-label">Mô tả:</label>
+                        <label for="recipient-name" class="col-form-label">Tên thể loại:</label>
+                        <input type="text" class="form-control" id="recipient-name" formControlName="name" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="message-text" class="col-form-label">Mô tả:</label>
                         <textarea class="form-control" id="message-text" formControlName="description"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="categoryId">Thể loại cha</label>
+                        <select id="categoryId" formControlName="categoryId" class="form-control">
+                            <option [value]="null">---None---</option>
+                            <option *ngFor="let category of parentCategories" [value]="category.categoryId">
+                                {{ category.name }}
+                            </option>
+                        </select>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Đóng
-        </button>
+                    Đóng
+                </button>
                 <button type="button" class="btn btn-primary" (click)="addCategory()">
-          Thêm thể loại
-        </button>
+                    Thêm thể loại
+                </button>
             </div>
         </div>
     </div>
@@ -56,28 +61,35 @@
             <div class="modal-body">
                 <form [formGroup]="editCategoryForm" *ngIf="this.editCategoryForm">
                     <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">Tên thể loại:</label
-            >
-            <input
-              type="text"
-              class="form-control"
-              id="recipient-name"
-              formControlName="name"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="message-text" class="col-form-label">Mô tả:</label>
+                        <label for="recipient-name" class="col-form-label">Tên thể loại:</label>
+                        <input type="text" class="form-control" id="recipient-name" formControlName="name" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="message-text" class="col-form-label">Mô tả:</label>
                         <textarea class="form-control" id="message-text" formControlName="description"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Tên thể loại:</label>
+                        <input type="text" class="form-control" id="recipient-name" formControlName="name" />
+                    </div>
+                    <div class="form-group">
+                        <label for="categoryId">Thể loại cha</label>
+                        <select id="categoryId" formControlName="categoryId" class="form-control">
+                            <option [value]="null">---None---</option>
+                            <option *ngFor="let category of parentCategories" [value]="category.categoryId">
+                                {{ category.name }}
+                            </option>
+                        </select>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Đóng
-        </button>
+                    Đóng
+                </button>
                 <button type="button" class="btn btn-primary" (click)="updateCategory()">
-          Chỉnh sửa thể loại
-        </button>
+                    Chỉnh sửa thể loại
+                </button>
             </div>
         </div>
     </div>
@@ -88,14 +100,15 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <ngx-datatable class="bootstrap" [rows]="categories" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" [rowClass]="rowClassFunction">
+                    <ngx-datatable class="bootstrap" [rows]="categories" [columnMode]="'force'" [headerHeight]="50"
+                        [footerHeight]="50" [rowHeight]="'auto'" [rowClass]="rowClassFunction">
                         <ngx-datatable-column name="ID">
                             <ng-template let-row="row" ngx-datatable-cell-template>
                                 {{ row.categoryId }}
                             </ng-template>
                         </ngx-datatable-column>
 
-                        <ngx-datatable-column name="Tên loại">
+                        <ngx-datatable-column name="Tên thể loại">
                             <ng-template let-row="row" ngx-datatable-cell-template>
                                 {{ row.name }}
                             </ng-template>
@@ -107,19 +120,28 @@
                             </ng-template>
                         </ngx-datatable-column>
 
+                        <ngx-datatable-column name="Thể loại cha">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{ getCategoryName(row.parentId) }}
+                            </ng-template>
+                        </ngx-datatable-column>
+
                         <ngx-datatable-column name="Edit">
                             <ng-template ngx-datatable-cell-template let-row="row">
-                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModaledit" data-bs-whatever="@mdo" (click)="openEditModal(row)">
-                  <i class="bi bi-pencil-square"></i> Chỉnh sửa
-                </button>
+                                <button *ngIf="!isParentCategory(row.name)" class="btn btn-primary"
+                                    data-bs-toggle="modal" data-bs-target="#exampleModaledit" data-bs-whatever="@mdo"
+                                    (click)="openEditModal(row)">
+                                    <i class="bi bi-pencil-square"></i> Chỉnh sửa
+                                </button>
                             </ng-template>
                         </ngx-datatable-column>
 
                         <ngx-datatable-column name="Delete">
                             <ng-template ngx-datatable-cell-template let-row="row">
-                                <button class="btn btn-danger" (click)="deleteCategory(row.categoryId)">
-                  <i class="bi bi-x"></i> Xóa
-                </button>
+                                <button *ngIf="!isParentCategory(row.name)" class="btn btn-danger"
+                                    (click)="deleteCategory(row.categoryId)">
+                                    <i class="bi bi-x"></i> Xóa
+                                </button>
                             </ng-template>
                         </ngx-datatable-column>
                     </ngx-datatable>
