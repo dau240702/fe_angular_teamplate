@@ -3,62 +3,45 @@
 </div>
 <!-- End Page Title -->
 
-<section class="section">
+<section class="section mt-3">
     <div class="row">
         <div class="col-lg-12">
-
             <div class="card">
                 <div class="card-body">
-                    <!-- Table with stripped rows -->
-                    <table class="table datatable">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Position</th>
-                                <th scope="col">Age</th>
-                                <th scope="col">Start Date</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Brandon Jacob</td>
-                                <td>Designer</td>
-                                <td>28</td>
-                                <td>2016-05-25</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Bridie Kessler</td>
-                                <td>Developer</td>
-                                <td>35</td>
-                                <td>2014-12-05</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Ashleigh Langosh</td>
-                                <td>Finance</td>
-                                <td>45</td>
-                                <td>2011-08-12</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">4</th>
-                                <td>Angus Grady</td>
-                                <td>HR</td>
-                                <td>34</td>
-                                <td>2012-06-11</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">5</th>
-                                <td>Raheem Lehner</td>
-                                <td>Dynamic Division Officer</td>
-                                <td>47</td>
-                                <td>2011-04-19</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <!-- End Table with stripped rows -->
+                    <div class="row mb-3 search-input">
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" placeholder="Tìm kiếm..." (input)="updateFilter($event)" />
+                        </div>
+                    </div>
+                    <ngx-datatable class="material" [rows]="filteredCategories" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [columns]="columns" [rowHeight]="'auto'" [rowClass]="rowClassFunction" [limit]="5" [count]="filteredCategories.length" [offset]="offset"
+                        (page)='onPage($event)'>
+                        <ngx-datatable-column name="Tên khách hàng">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{ row.name }}
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="Email ">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{ row.email }}
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="Số điện thoại ">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{ row.phone }}
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="Tiêu đề ">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{ row.title }}
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="Nội dung">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{ row.content }}
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                    </ngx-datatable>
                 </div>
             </div>
         </div>
