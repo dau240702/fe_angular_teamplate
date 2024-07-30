@@ -1,6 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ContactComponent } from './contact.component';
 
 @NgModule({
@@ -8,6 +8,8 @@ import { ContactComponent } from './contact.component';
   imports: [
     FormsModule,
     CommonModule,
+    ReactiveFormsModule
+
 
   ],
   schemas: [
