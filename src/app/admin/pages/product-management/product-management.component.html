@@ -2,7 +2,8 @@
     <h1>Quản lý sản phẩm</h1>
 </div>
 <!-- Button to open modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModaladd" data-bs-whatever="@mdo">
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModaladd"
+    data-bs-whatever="@mdo">
     <i class="bi bi-plus"></i> Thêm sản phẩm
 </button>
 <div class="modal fade" id="exampleModaladd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -13,7 +14,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form [formGroup]="addProductForm" *ngIf="this.addProductForm" (ngSubmit)="addProduct()">
+                <form [formGroup]="addProductForm" *ngIf="this.addProductForm">
                     <div class="form-group">
                         <label for="name">Tên sản phẩm</label>
                         <input id="name" formControlName="name" class="form-control" />
@@ -32,19 +33,19 @@
                     </div>
                     <div class="form-group">
                         <label for="imageUrl">URL hình ảnh</label>
-                        <input type="file" id="imageUrl" formControlName="imageUrl" class="form-control" />
+                        <input type="file" (change)="onFileChange($event)" id="imageUrl" class="form-control" />
                     </div>
                     <div class="form-group">
                         <label for="categoryId">Danh mục</label>
                         <select id="categoryId" formControlName="categoryId" class="form-control">
-                        <option *ngFor="let category of categories" [value]="category.categoryId">{{ category.name }}</option>
-                      </select>
+                            <option *ngFor="let category of categories" [value]="category.categoryId">{{ category.name
+                                }}</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="status">Trạng thái</label>
                         <input id="status" formControlName="status" class="form-control" />
                     </div>
-                    <button type="submit" class="btn btn-primary">Thêm sản phẩm</button>
                 </form>
 
             </div>
@@ -56,63 +57,77 @@
     </div>
 </div>
 
-
-<!-- End Page Title -->
 <section class="section mt-3">
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <!-- Table with stripped rows -->
-                    <ngx-datatable class="bootstrap" [rows]="Allproduct" [columns]="columns" [footerHeight]="50" [rowHeight]="'auto'" [limit]="10" [columnMode]="'force'" [reorderable]="true" [externalPaging]="true" [count]="Allproduct.length" (page)="'onPage($event)'">
+                    <!-- Tìm kiếm -->
+                    <div class="row mb-3 search-input">
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" placeholder="Tìm kiếm sản phẩm..."
+                                (input)="updateFilter($event)" />
+                        </div>
+                    </div>
 
+                    <!-- Bảng sản phẩm -->
+                    <ngx-datatable class="material" [rows]="filteredProduct" [columnMode]="'force'" [headerHeight]="50"
+                        [footerHeight]="50" [columns]="columns" [rowHeight]="'auto'" [rowClass]="rowClassFunction"
+                        [limit]="5" [count]="totalItems.length" [offset]="offset" (page)="onPage($event)">
                         <ngx-datatable-column name="Tên sản phẩm">
                             <ng-template let-row="row" ngx-datatable-cell-template>
                                 {{ row.name }}
                             </ng-template>
                         </ngx-datatable-column>
+
                         <ngx-datatable-column name="Loại sản phẩm">
                             <ng-template let-row="row" ngx-datatable-cell-template>
-                                {{ row.categoryId }}
+                                {{ getCategoryName(row.categoryId) }}
                             </ng-template>
                         </ngx-datatable-column>
-                        <ngx-datatable-column name="Gía sản phẩm">
+
+                        <ngx-datatable-column name="Giá sản phẩm">
                             <ng-template let-row="row" ngx-datatable-cell-template>
-                                {{ row.price }}
+                                {{ row.price | currency }}
                             </ng-template>
                         </ngx-datatable-column>
+
                         <ngx-datatable-column name="Số lượng">
                             <ng-template let-row="row" ngx-datatable-cell-template>
                                 {{ row.stockQuantity }}
                             </ng-template>
                         </ngx-datatable-column>
+
                         <ngx-datatable-column name="Trạng thái">
                             <ng-template let-row="row" ngx-datatable-cell-template>
                                 {{ row.status }}
                             </ng-template>
                         </ngx-datatable-column>
-                        <ngx-datatable-column name="Ảnh sản phảm" [sortable]="false">
+
+                        <ngx-datatable-column name="Ảnh sản phẩm" [sortable]="false">
                             <ng-template ngx-datatable-cell-template let-row="row">
-                                <img [src]="getFullImageUrl(row.imageUrlPath)" alt="Product Image" style="width: 100px; height: auto;">
+                                <img [src]="getFullImageUrl(row.imageUrlPath)" alt="Product Image"
+                                    style="width: 100px; height: auto;">
                             </ng-template>
                         </ngx-datatable-column>
+
                         <ngx-datatable-column name="Edit">
                             <ng-template ngx-datatable-cell-template let-row="row">
-                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModaledit" data-bs-whatever="@mdo" (click)="openEditModal(row)">
-                  <i class="bi bi-pencil-square"></i> Chỉnh sửa
-                </button>
+                                <button class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModaledit" (click)="openEditModal(row)">
+                                    <i class="bi bi-pencil-square"></i> Sửa
+                                </button>
                             </ng-template>
                         </ngx-datatable-column>
 
                         <ngx-datatable-column name="Delete">
                             <ng-template ngx-datatable-cell-template let-row="row">
-                                <button class="btn btn-danger" (click)="deleteproduct(row.productId)">
-                  <i class="bi bi-x"></i> Xóa
-                </button>
+                                <button class="btn btn-danger" (click)="deleteProduct(row.productId)">
+                                    <i class="bi bi-x"></i> Xóa
+                                </button>
                             </ng-template>
                         </ngx-datatable-column>
                     </ngx-datatable>
-                    <!-- End Table with stripped rows -->
                 </div>
             </div>
         </div>

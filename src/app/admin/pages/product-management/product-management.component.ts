@@ -9,38 +9,43 @@ import { ProductDTO } from '../../../../model/product-dto';
 @Component({
   selector: 'app-product-management',
   templateUrl: './product-management.component.html',
-  styleUrl: './product-management.component.css'
+  styleUrl: './product-management.component.css',
 })
 export class ProductManagementComponent implements OnInit {
-  Allproduct: any[] = [];
+  Allproduct: ProductDTO[] = [];
   userId: number | null = null;
-  addProductForm: FormGroup | undefined;
-  products: any[] = [];
+  addProductForm: FormGroup;
+  editProductForm: FormGroup;
+  filteredProduct: ProductDTO[] = [];
+  totalItems : ProductDTO[] = [];
+  offset = 0;
   currentProductId: number | null = null;
-  editProductForm: FormGroup ;
-
   columns = [
-    { prop: 'categoryId', name: 'ID' },
-    { prop: 'name', name: 'Name' },
-    { prop: 'description', name: 'Description' },
-    { prop: 'imageUrlPath', name: 'Image' }
+    { prop: 'name', name: 'Tên sản phẩm' },
+    { prop: 'categoryId', name: 'Loại sản phẩm' },
+    { prop: 'price', name: 'Giá sản phẩm' },
+    { prop: 'stockQuantity', name: 'Số lượng' },
+    { prop: 'status', name: 'Trạng thái' },
+    { prop: 'imageUrl', name: 'Ảnh sản phẩm' },
   ];
-  product: ProductDTO = new ProductDTO();
-
-  baseUrl: string = 'http://localhost:8081'; // Giả sử Spring Boot chạy trên cổng 8080// Thay đổi nếu cần thiết
+  baseUrl: string = 'http://localhost:8081';
   notificationService: any;
-  categories = [
-    { categoryId: 1, name: 'Category 1' },
-  ];
+  categories = [{ categoryId: 1, name: 'Category 1' }];
+
   constructor(
     private apiService: ApiService,
     private userService: UserService,
     private fb: FormBuilder
-
-
-
   ) {
-
+    this.addProductForm = this.fb.group({
+      name: ['', Validators.required],
+      description: ['', Validators.required],
+      price: [0, Validators.required],
+      stockQuantity: [0, Validators.required],
+      imageUrl: [''],
+      categoryId: [undefined, Validators.required],
+      status: ['Available', Validators.required],
+    });
     this.editProductForm = this.fb.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
@@ -48,10 +53,10 @@ export class ProductManagementComponent implements OnInit {
       stockQuantity: [0, Validators.required],
       imageUrl: [''],
       categoryId: ['', Validators.required],
-      status: ['Available', Validators.required]
+      status: ['Available', Validators.required],
     });
-
   }
+
   ngOnInit(): void {
     this.userService.initializeUserFromToken();
     this.userService.userId$.subscribe((userId) => {
@@ -59,8 +64,6 @@ export class ProductManagementComponent implements OnInit {
         this.userId = userId;
         this.loadProduct();
         this.loadCategories();
-        this.initializeForm(); // Khởi tạo form
-
       }
     });
   }
@@ -80,12 +83,17 @@ export class ProductManagementComponent implements OnInit {
     this.apiService.get(`${ConstService.GetAllProduct}`).subscribe(
       (data) => {
         this.Allproduct = data;
+        this.totalItems = this.Allproduct; // Cập nhật tổng số sản phẩm
+        this.filteredProduct = this.Allproduct.slice(
+          this.offset,
+        ); // Cập nhật sản phẩm theo phân trang
       },
       (error) => {
         console.error('Error fetching Product:', error);
       }
     );
   }
+
   getFullImageUrl(imagePath: string): string {
     if (!imagePath) return ''; // Trả về chuỗi rỗng nếu không có đường dẫn
     return `${this.baseUrl}${imagePath}`;
@@ -95,88 +103,106 @@ export class ProductManagementComponent implements OnInit {
     this.currentProductId = product.productId;
     this.editProductForm.setValue({
       name: product.name,
-      description: product.description
+      description: product.description,
+      price: product.price,
+      stockQuantity: product.stockQuantity,
+      imageUrl: product.imageUrl,
+      categoryId: product.categoryId,
+      status: product.status,
     });
   }
-  initializeForm(): void {
-    this.addProductForm = this.fb.group({
-      name: ['', Validators.required],
-      description: ['', Validators.required],
-      price: [0, Validators.required],
-      stockQuantity: [0, Validators.required],
-      imageUrl: [''],
-      categoryId: ['', Validators.required],
-      status: ['Available', Validators.required]
-    });
-  }
-
-
 
   addProduct(): void {
-    if (this.addProductForm?.valid && this.userId) {
-      const product: ProductDTO = this.addProductForm.value;
-      product.createdBy = this.userId; // Gán userId vào createdBy của productDTO
-      product.categoryId = Number(product.categoryId);
-
-      this.apiService.post(ConstService.AddProduct,product).subscribe(
-        (response) => {
+    if (this.addProductForm && this.addProductForm.valid && this.userId) {
+      const formValue = this.addProductForm.value;
+      const productData: Partial<ProductDTO> = {
+        name: formValue.name,
+        description: formValue.description,
+        price: formValue.price,
+        stockQuantity: formValue.stockQuantity,
+        imageUrl: formValue.imageUrl,
+        categoryId: Number(formValue.categoryId),
+        status: formValue.status,
+        createdBy: this.userId,
+      };
+      this.apiService.post(ConstService.AddProduct, productData).subscribe(
+        (response: ProductDTO) => {
           this.notificationService.success('Thêm sản phẩm thành công.');
-          this.addProductForm?.reset();  // Reset form
-          const modalCloseButton = document.querySelector('#exampleModaladd .btn-close') as HTMLElement;
-          modalCloseButton?.click();  // Đóng modal
-          this.loadProduct(); // Load lại danh sách sản phẩm
+          this.addProductForm?.reset();
+          const modalCloseButton = document.querySelector(
+            '#exampleModaladd .btn-close'
+          ) as HTMLElement;
+          modalCloseButton?.click();
+          this.loadProduct();
         },
         (error) => {
           this.notificationService.error('Có lỗi xảy ra khi thêm sản phẩm.');
-          console.error('Error adding product:', error); // Log lỗi để kiểm tra
+          console.error('Error adding product:', error);
         }
       );
     } else {
-      console.log('Form is invalid'); // Log form invalid để kiểm tra
-      this.notificationService.error('Vui lòng điền đầy đủ thông tin sản phẩm.');
+      console.log('Form is invalid');
+      this.notificationService.error(
+        'Vui lòng điền đầy đủ thông tin sản phẩm.'
+      );
     }
   }
+  onFileChange(event: any) {
+    const file = event.target.files[0];
+    this.addProductForm.patchValue({
+      imageUrl: file
+    });
+  }
+  onPage(event: any) {
+    this.offset = event.offset;
+    this.filteredProduct = this.Allproduct.slice(
+      this.offset,
+    );
+  }
 
- 
-    
-  deleteproduct(productId: number) {
+  deleteProduct(productId: number): void {
     Swal.fire({
-      title: 'Bạn có chắc chắn muốn xóa?',
-      text: "Bạn sẽ không thể khôi phục lại dữ liệu này!",
-      icon: 'warning',
+      title: 'Bạn có chắc chắn muốn xóa sản phẩm này?',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Có, xóa nó đi!',
-      cancelButtonText: 'Không, giữ nguyên'
+      confirmButtonText: 'Xóa',
+      cancelButtonText: 'Hủy',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.apiService.delete(`${ConstService.DeleteProduct}/${productId}`).subscribe(
-          () => {
-            this.products = this.products.filter(product => product.productId !== productId);
-            Swal.fire(
-              'Đã xóa!',
-              'Dữ liệu của bạn đã được xóa.',
-              'success'
-            );
-            this.loadProduct();
-          },
-          (error) => {
-            console.error('Error deleting category:', error);
-            let errorMessage = 'Có lỗi xảy ra khi xóa dữ liệu.';
-
-            if (error.status === 400 && error.error.message.includes('constraint')) {
-              errorMessage = 'Bạn không thể xóa hàng này vì nó đang liên kết với dữ liệu khác.';
+        this.apiService
+          .delete(`${ConstService.DeleteProduct}/${productId}`)
+          .subscribe(
+            (response) => {
+              Swal.fire('Đã xóa!', '', 'success');
+              this.loadProduct();
+            },
+            (error) => {
+              Swal.fire('Có lỗi xảy ra!', '', 'error');
+              console.error('Error deleting product:', error);
             }
-
-            Swal.fire(
-              'Lỗi!',
-              errorMessage,
-              'error'
-            );
-          }
-        );
+          );
       }
     });
   }
+
+  updateFilter(event: any): void {
+    const value = event.target.value.toLowerCase();
+    this.filteredProduct = this.Allproduct.filter(
+      (product) =>
+        product.name.toLowerCase().includes(value) ||
+        this.getCategoryName(product.categoryId).toLowerCase().includes(value)
+    );
+    this.totalItems = this.filteredProduct;
+    this.offset = 0; // Reset offset khi tìm kiếm
+    this.filteredProduct = this.filteredProduct.slice(
+      this.offset,
+    ); // Cập nhật sản phẩm theo phân trang
+  }
+
+  getCategoryName(categoryId: number): string {
+    const category = this.categories.find((c) => c.categoryId === categoryId);
+    return category ? category.name : 'Unknown';
+  }
+  rowClassFunction = (row: any, index: number) => {
+    return index % 2 === 0 ? 'datatable-row-even' : 'datatable-row-odd';
+  };
 }
