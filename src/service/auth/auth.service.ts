@@ -7,7 +7,6 @@ import { ConstService } from '../const.service';
   providedIn: 'root',
 })
 export class AuthService {
-  //endpoint: string = 'http://192.168.24.32:8080';
   endpoint: string = ConstService.serverHost();
   headers = new HttpHeaders().set('Content-Type', 'application/json');
   token = '';
