@@ -3,118 +3,130 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "fe_angular_teamplate": {
-      "projectType": "application",
-      "schematics": {
-        "@schematics/angular:component": {
-          "standalone": false
-        },
-        "@schematics/angular:directive": {
-          "standalone": false
-        },
-        "@schematics/angular:pipe": {
-          "standalone": false
-        }
-      },
-      "root": "",
-      "sourceRoot": "src",
-      "prefix": "app",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:application",
-          "options": {
-            "outputPath": "dist/fe_angular_teamplate",
-            "index": "src/index.html",
-            "browser": "src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
-            "tsConfig": "tsconfig.app.json",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "src/assets",
-                "output": "assets"
+      "fe_angular_teamplate": {
+          "projectType": "application",
+          "schematics": {
+              "@schematics/angular:component": {
+                  "standalone": false
               },
-              {
-                "glob": "**/*.svg",
-                "input": "node_modules/ionicons/dist/ionicons/svg",
-                "output": "./svg"
+              "@schematics/angular:directive": {
+                  "standalone": false
+              },
+              "@schematics/angular:pipe": {
+                  "standalone": false
               }
-            ],
-            "styles": ["src/styles.css",
-            "src/assets/user/vendor/bootstrap/css/bootstrap.min.css",
-            "src/assets/user/vendor/bootstrap-icons/bootstrap-icons.css",
-            "src/assets/user/vendor/aos/aos.css",
-            "src/assets/user/vendor/glightbox/css/glightbox.min.css",
-            "src/assets/user/vendor/swiper/swiper-bundle.min.css",
-            "src/assets/user/vendor/remixicon/remixicon.css",
-            "src/assets/user/css/main.css"
-            ],
-            "scripts": [
-            ]
           },
-          "configurations": {
-            "production": {
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "2kB",
-                  "maximumError": "4kB"
-                }
-              ],
-              "outputHashing": "all"
-            },
-            "development": {
-              "optimization": false,
-              "extractLicenses": false,
-              "sourceMap": true
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "configurations": {
-            "production": {
-              "buildTarget": "fe_angular_teamplate:build:production"
-            },
-            "development": {
-              "buildTarget": "fe_angular_teamplate:build:development"
-            }
-          },
-          "defaultConfiguration": "development"
-        },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n"
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
-            "tsConfig": "tsconfig.spec.json",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
+          "root": "",
+          "sourceRoot": "src",
+          "prefix": "app",
+          "architect": {
+              "build": {
+                  "builder": "@angular-devkit/build-angular:application",
+                  "options": {
+                      "outputPath": "dist/fe_angular_teamplate",
+                      "index": "src/index.html",
+                      "browser": "src/main.ts",
+                      "polyfills": ["zone.js", "@angular/localize/init"],
+                      "tsConfig": "tsconfig.app.json",
+                      "assets": [{
+                              "glob": "**/*",
+                              "input": "src/assets",
+                              "output": "assets"
+                          },
+                          {
+                              "glob": "**/*.svg",
+                              "input": "node_modules/ionicons/dist/ionicons/svg",
+                              "output": "./svg"
+                          }
+                      ],
+                      "styles": [
+                          "src/styles.css",
+                          "src/styles.scss",
+                          "node_modules/swiper/swiper-bundle.min.css",
+                          "node_modules/@swimlane/ngx-datatable/themes/material.css",
+                          "node_modules/@swimlane/ngx-datatable/themes/dark.css",
+                          "node_modules/@swimlane/ngx-datatable/themes/bootstrap.css"
+                      ],
+                      "stylePreprocessorOptions": {
+                          "includePaths": ["src", "node_modules"]
+                      },
+                      "scripts": ["node_modules/swiper/swiper-bundle.min.js"],
+                      "server": "src/main.server.ts",
+                      "prerender": false,
+                      "ssr": false
+                  },
+                  "configurations": {
+                      "production": {
+                          "budgets": [{
+                                  "type": "initial",
+                                  "maximumWarning": "500kB",
+                                  "maximumError": "2MB"
+                              },
+                              {
+                                  "type": "anyComponentStyle",
+                                  "maximumWarning": "2kB",
+                                  "maximumError": "4kB"
+                              }
+                          ],
+                          "outputHashing": "all"
+                      },
+                      "development": {
+                          "optimization": false,
+                          "extractLicenses": false,
+                          "sourceMap": true,
+                          "fileReplacements": [{
+                              "replace": "src/environments/environment.ts",
+                              "with": "src/environments/environment.development.ts"
+                          }]
+                      }
+                  },
+                  "defaultConfiguration": "production"
+              },
+              "serve": {
+                  "builder": "@angular-devkit/build-angular:dev-server",
+                  "configurations": {
+                      "production": {
+                          "buildTarget": "fe_angular_teamplate:build:production"
+                      },
+                      "development": {
+                          "buildTarget": "fe_angular_teamplate:build:development"
+                      }
+                  },
+                  "defaultConfiguration": "development"
+              },
+              "extract-i18n": {
+                  "builder": "@angular-devkit/build-angular:extract-i18n"
+              },
+              "test": {
+                  "builder": "@angular-devkit/build-angular:karma",
+                  "options": {
+                      "polyfills": [
+                        "zone.js",
+                        "zone.js/testing",
+                        "@angular/localize/init"
+                      ],
+                      "tsConfig": "tsconfig.spec.json",
+                      "assets": [{
+                              "glob": "**/*",
+                              "input": "src/assets",
+                              "output": "assets"
+                          },
+                          {
+                              "glob": "**/*.svg",
+                              "input": "node_modules/ionicons/dist/ionicons/svg",
+                              "output": "./svg"
+                          }
+                      ],
+
+                      "styles": ["@angular/material/prebuilt-themes/azure-blue.css"],
+                      "stylePreprocessorOptions": {
+                          "includePaths": ["src"]
+                      },
+                      "scripts": []
+                  }
               }
-            ],
-            "styles": [
-              "src/styles.css"
-            ],
-            "scripts": []
           }
-        }
       }
-    }
   },
   "cli": {
     "analytics": "382ea651-70a8-4f58-b10f-35116a1d3c59"

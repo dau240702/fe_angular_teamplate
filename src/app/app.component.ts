@@ -22,6 +22,10 @@ export class AppComponent implements OnInit {
           if (event.url.startsWith('/admin')) {
             this.loadAdminStyles();
             this.loadAdminScripts();
+          }else{
+
+            this.loadUserStyles();
+            this.loadUserScripts();
           }
         }
       });
@@ -43,6 +47,13 @@ export class AppComponent implements OnInit {
 
   loadUserStyles() {
     this.styleManager.setStyles('user-theme',
+      'assets/user/vendor/bootstrap/css/bootstrap.min.css',
+      'assets/user/vendor/bootstrap-icons/bootstrap-icons.css',
+      // 'assets/user/vendor/aos/aos.css',
+      'assets/user/vendor/glightbox/css/glightbox.min.css',
+      'assets/user/vendor/swiper/swiper-bundle.min.css',
+      'assets/user/vendor/remixicon/remixicon.css',
+      'assets/user/css/main.css'
     );
   }
 
