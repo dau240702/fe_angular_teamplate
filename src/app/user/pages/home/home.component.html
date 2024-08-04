@@ -328,82 +328,27 @@
 <!-- ======= Recent Blog Posts Section ======= -->
 <section id="recent-posts" class="recent-posts">
     <div class="container" data-aos="fade-up">
-        <div class="section-header">
-            <h2>Tin tức mới nhất</h2>
+      <div class="section-header">
+        <h2>Tin tức mới nhất</h2>
+      </div>
+  
+      <div class="row gy-5">
+        <div *ngFor="let post of recentPosts; let i = index" class="col-xl-3 col-md-6" data-aos="fade-up" [attr.data-aos-delay]="100 * (i + 1)">
+          <div class="post-box">
+            <div class="post-img">
+              <img [src]="getFullImageUrl(post.excerptImage)" class="img-fluid" alt="image" />
+            </div>
+            <div class="meta">
+              <span class="post-date">{{ post.createdAt | date:'EEEE, d MMMM' }}</span>
+              <span class="post-author"> / {{ post.author }}</span>
+            </div>
+            <h3 class="post-title">{{ post.title }}</h3>
+            <p>{{ post.content | slice:0:150 }}...</p>
+            <a [routerLink]="['/blog', post.id]" class="readmore stretched-link">
+              <span>Đọc Thêm</span><i class="bi bi-arrow-right"></i>
+            </a>
+          </div>
         </div>
-
-        <div class="row gy-5">
-            <div class="col-xl-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
-                <div class="post-box">
-                    <div class="post-img">
-                        <img src="../../../assets/user/images/blog/blog-1.jpg" class="img-fluid" alt="image" />
-                    </div>
-                    <div class="meta">
-                        <span class="post-date">Thứ Ba, 12 Tháng 12</span>
-                        <span class="post-author"> / Julia Parker</span>
-                    </div>
-                    <h3 class="post-title">Trải nghiệm không gian sống lý tưởng với các dịch vụ chất lượng cao</h3>
-                    <p>
-                        Tận hưởng không gian sống hoàn hảo với dịch vụ thiết kế nội thất chất lượng cao. Chúng tôi cam kết mang đến cho bạn không gian sống đẳng cấp và tinh tế, phản ánh phong cách và cá tính riêng của bạn.
-                    </p>
-                    <a routerLink="/blog/blog-detail" class="readmore stretched-link"><span>Đọc Thêm</span><i class="bi bi-arrow-right"></i></a>
-
-                </div>
-            </div>
-
-            <div class="col-xl-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
-                <div class="post-box">
-                    <div class="post-img">
-                        <img src="../../../assets/user/images/blog/blog-2.jpg" class="img-fluid" alt="" />
-                    </div>
-                    <div class="meta">
-                        <span class="post-date">Thứ Sáu, 5 Tháng 9</span>
-                        <span class="post-author"> / Mario Douglas</span>
-                        </div>
-                    <h3 class="post-title">Trải nghiệm không gian sống đẳng cấp với dịch vụ chuyên nghiệp</h3>
-                    <p>
-                        Hãy tận hưởng một không gian sống lý tưởng và đẳng cấp với dịch vụ chuyên nghiệp từ chúng tôi. Chúng tôi cam kết mang đến cho bạn những giải pháp thiết kế nội thất tinh tế và sang trọng, tạo nên không gian sống độc đáo và ấn tượng.
-                    </p>
-                    <a routerLink="/blog/blog-detail" class="readmore stretched-link"><span>Đọc Thêm</span><i class="bi bi-arrow-right"></i></a>
-
-                </div>
-            </div>
-
-            <div class="col-xl-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
-                <div class="post-box">
-                    <div class="post-img">
-                        <img src="../../../assets/user/images/blog/blog-3.jpg" class="img-fluid" alt="" />
-                    </div>
-                    <div class="meta">
-                        <span class="post-date">Thứ Ba, 27 Tháng 7</span>
-                        <span class="post-author"> / Lisa Hunter</span>
-                    </div>
-                    <h3 class="post-title">Trải nghiệm không gian sống độc đáo và chất lượng</h3>
-                    <p>
-                        Hãy khám phá không gian sống độc đáo và chất lượng với chúng tôi. Chúng tôi mang đến những giải pháp thiết kế nội thất đa dạng và sáng tạo, đảm bảo phản ánh phong cách và cá tính của bạn trong mỗi chi tiết.
-                    </p>
-                    <a routerLink="/blog/blog-detail" class="readmore stretched-link"><span>Đọc Thêm</span><i class="bi bi-arrow-right"></i></a>
-
-                </div>
-            </div>
-
-            <div class="col-xl-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
-                <div class="post-box">
-                    <div class="post-img">
-                        <img src="../../../assets/user/images/blog/blog-4.jpg" class="img-fluid" alt="" />
-                    </div>
-                    <div class="meta">
-                        <span class="post-date">Thứ Ba, 16 Tháng 9</span>
-                        <span class="post-author"> / Mario Douglas</span>
-                    </div>
-                    <h3 class="post-title">Trải nghiệm không gian sống đẳng cấp và tiện nghi</h3>
-                    <p>
-                        Hãy trải nghiệm không gian sống đẳng cấp và tiện nghi với chúng tôi. Chúng tôi cung cấp những giải pháp thiết kế nội thất đa dạng và thông minh, giúp tối ưu hóa mọi không gian để phản ánh phong cách và nhu cầu của bạn.
-                    </p>
-                    <a routerLink="/blog/blog-detail" class="readmore stretched-link"><span>Đọc Thêm</span><i class="bi bi-arrow-right"></i></a>
-
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
-</section>
+  </section>

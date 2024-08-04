@@ -6,6 +6,7 @@ import { ContactModule } from '../contact/contact.module';
 import { AboutModule } from '../about/about.module';
 import { ProductModule } from '../product/product.module';
 import { ServiceModule } from '../service/service.module';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { ServiceModule } from '../service/service.module';
     ContactModule,
     AboutModule,
     ProductModule,
-    ServiceModule
+    ServiceModule,
+    RouterModule
 
   ], 
 

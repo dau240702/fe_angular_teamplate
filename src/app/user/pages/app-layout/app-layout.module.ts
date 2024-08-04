@@ -7,6 +7,7 @@ import { AppLayoutComponent } from './app-layout.component';
 import { HomeAppModule } from '../home/home.module';
 import { SharedModule } from '../../shared/app.shared.module';
 import { IonicModule } from '@ionic/angular';
+import { BlogModule } from '../blog/blog.module';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { IonicModule } from '@ionic/angular';
     AppLayoutRoutingModule,
     SharedModule,
     HomeAppModule,
-    IonicModule
+    IonicModule,
+    BlogModule
 
   ],
   exports: [AppLayoutComponent],
