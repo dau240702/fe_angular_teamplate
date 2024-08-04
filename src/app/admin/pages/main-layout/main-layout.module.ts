@@ -9,6 +9,7 @@ import { CategoryManagementModule } from '../category-management/category-manage
 import { ProductManagementComponent } from '../product-management/product-management.component';
 import { ProductManagementModule } from '../product-management/product-management.module';
 import { ContactManagementModule } from '../contact-management/contact-management.module';
+import { NewsManagementModule } from '../news-management/news-management.module';
 
 @NgModule({
   declarations: [MainLayoutComponent],
@@ -20,7 +21,8 @@ import { ContactManagementModule } from '../contact-management/contact-managemen
     AppAdminSharedModule,
     CategoryManagementModule,
     ProductManagementModule,
-    ContactManagementModule
+    ContactManagementModule,
+    NewsManagementModule
   ],
   exports: [MainLayoutComponent],
 })

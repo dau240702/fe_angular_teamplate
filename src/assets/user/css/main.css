@@ -201,7 +201,6 @@ section {
     opacity: 1;
 }
 
-
 /*--------------------------------------------------------------
 # Preloader
 --------------------------------------------------------------*/
@@ -254,9 +253,16 @@ section {
 --------------------------------------------------------------*/
 
 .header {
+    -background-color: rgba(255, 255, 255, 0);
+    --heading-color: #ffffff;
+    color: var(--default-color);
+    background-color: #9ea19f;
+    padding: 15px 0;
     transition: all 0.5s;
     z-index: 997;
-    padding: 24px 0;
+}
+.scrolled .header {     
+    --background-color: rgba(23, 40, 59, 0.9);
 }
 
 @media (max-width: 1200px) {
@@ -311,7 +317,7 @@ section {
         font-family: var(--font-default);
         font-size: 15px;
         font-weight: 500;
-        color: rgba(255, 255, 255, 0.6);
+        color:inherit;
         white-space: nowrap;
         transition: 0.3s;
     }

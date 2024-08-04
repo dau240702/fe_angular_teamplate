@@ -40,4 +40,10 @@ export class ApiService {
       headers: this.headers,
     });
   }
+  postFormData(bareUrl: string, formData: FormData): Observable<any> {
+    return this.http.post<any>(`${this.endpoint}/${bareUrl}`, formData);
+  }
+  putFormData(bareUrl: string, formData: FormData): Observable<any> {
+    return this.http.put<any>(`${this.endpoint}/${bareUrl}`, formData);
+  }
 }

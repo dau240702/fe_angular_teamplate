@@ -3,66 +3,181 @@
 </div>
 <!-- End Page Title -->
 
-<section class="section">
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalAddPost" data-bs-whatever="@mdo">
+    <i class="bi bi-plus"></i> Thêm bài viết
+</button>
+<div class="modal fade" id="exampleModalAddPost" tabindex="-1" aria-labelledby="exampleModalLabelAddPost" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabelAddPost">Thêm bài viết</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="addPostForm" *ngIf="addPostForm" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="title">Tiêu đề</label>
+                        <input id="title" name="title" formControlName="title" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="content">Nội dung</label>
+                        <textarea id="content" name="content" formControlName="content" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="imageFile">Hình ảnh</label>
+                        <input type="file" (change)="onFileChange($event)" id="imageFile" name="imageFile" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="categoryId">Danh mục</label>
+                        <select id="categoryId" name="categoryId" formControlName="categoryId" class="form-control">
+                            <option *ngFor="let category of categories" [value]="category.categoryId">{{ category.name }}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Trạng thái</label>
+                        <input id="status" name="status" formControlName="status" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="fromDate">Từ ngày</label>
+                        <input type="date" id="fromDate" name="fromDate" formControlName="fromDate" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="toDate">Đến ngày</label>
+                        <input type="date" id="toDate" name="toDate" formControlName="toDate" class="form-control" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary" (click)="addPost()">Thêm bài viết</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="exampleModalEditPost" tabindex="-1" aria-labelledby="exampleModalLabelEditPost" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabelEditPost">Chỉnh sửa bài viết</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="editPostForm" *ngIf="editPostForm" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="title">Tiêu đề</label>
+                        <input id="title" name="title" formControlName="title" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="content">Nội dung</label>
+                        <textarea id="content" name="content" formControlName="content" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="editImageFile">Hình ảnh</label>
+                        <input type="file" (change)="onEditFileChange($event)" id="editImageFile" name="editImageFile" class="form-control" />
+                    </div>
+                    <div class="form-group" *ngIf="editPostForm.get('imageUrlPath')?.value">
+                        <img [src]="editPostForm.get('imageUrlPath')?.value" alt="Current post image" class="img-thumbnail" />
+                    </div>
+                    <div class="form-group">
+                        <label for="categoryId">Danh mục</label>
+                        <select id="categoryId" name="categoryId" formControlName="categoryId" class="form-control">
+                            <option *ngFor="let category of categories" [value]="category.categoryId">{{ category.name }}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Trạng thái</label>
+                        <input id="status" name="status" formControlName="status" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="fromDate">Từ ngày</label>
+                        <input type="date" id="fromDate" name="fromDate" formControlName="fromDate" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="toDate">Đến ngày</label>
+                        <input type="date" id="toDate" name="toDate" formControlName="toDate" class="form-control" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary" (click)="updatePost(currentPostId!)">Cập nhật bài viết</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<section class="section mt-3">
     <div class="row">
         <div class="col-lg-12">
-
             <div class="card">
                 <div class="card-body">
-                    <!-- Table with stripped rows -->
-                    <table class="table datatable">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Position</th>
-                                <th scope="col">Age</th>
-                                <th scope="col">Start Date</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Brandon Jacob</td>
-                                <td>Designer</td>
-                                <td>28</td>
-                                <td>2016-05-25</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Bridie Kessler</td>
-                                <td>Developer</td>
-                                <td>35</td>
-                                <td>2014-12-05</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Ashleigh Langosh</td>
-                                <td>Finance</td>
-                                <td>45</td>
-                                <td>2011-08-12</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">4</th>
-                                <td>Angus Grady</td>
-                                <td>HR</td>
-                                <td>34</td>
-                                <td>2012-06-11</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">5</th>
-                                <td>Raheem Lehner</td>
-                                <td>Dynamic Division Officer</td>
-                                <td>47</td>
-                                <td>2011-04-19</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <!-- End Table with stripped rows -->
+                    <!-- Tìm kiếm -->
+                    <div class="row mb-3 search-input">
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" placeholder="Tìm kiếm bài viết..." (input)="updateFilter($event)" />
+                        </div>
+                    </div>
 
+                    <!-- Bảng bài viết -->
+                    <ngx-datatable class="material" [rows]="filteredPosts" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [columns]="columns" [rowHeight]="'auto'" [rowClass]="rowClassFunction" [limit]="5" [count]="totalItems.length" [offset]="offset" (page)="onPage($event)">
+                        <ngx-datatable-column name="Tiêu đề">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{ row.title }}
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column name="Danh mục">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{ getCategoryName(row.categoryId) }}
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column name="Trạng thái">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{ row.status }}
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column name="Từ ngày">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{ row.fromDate | date:'dd-MM-yyyy' }}
+
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column name="Đến ngày">
+                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                {{ row.fromDate | date:'dd-MM-yyyy'}}
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column name="Ảnh bài viết" [sortable]="false">
+                            <ng-template ngx-datatable-cell-template let-row="row">
+                                <img [src]="getFullImageUrl(row.excerptImage)" alt="Post Image" style="width: 100px; height: auto;">
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column name="Edit">
+                            <ng-template ngx-datatable-cell-template let-row="row">
+                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalEditPost" (click)="openEditModal(row)">
+                                    <i class="bi bi-pencil-square"></i> Sửa
+                                </button>
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column name="Delete">
+                            <ng-template ngx-datatable-cell-template let-row="row">
+                                <button class="btn btn-danger" (click)="deletePost(row.postId)">
+                                    <i class="bi bi-x"></i> Xóa
+                                </button>
+                            </ng-template>
+                        </ngx-datatable-column>
+                    </ngx-datatable>
                 </div>
             </div>
-
         </div>
     </div>
 </section>

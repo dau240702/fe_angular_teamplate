@@ -1,7 +1,7 @@
 <!-- ======= Header ======= -->
 <header id="header" class="header d-flex align-items-center fixed-top">
     <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
-        <a routerLink="/" class="logo d-flex align-items-center">
+        <a (click)="navigateTo('/')" [class.active]="isActive('/')" class="logo d-flex align-items-center">
             <h1 class="d-flex align-items-center">NHATAY</h1>
         </a>
 
@@ -12,12 +12,12 @@
             <ul>
                 <li><a (click)="navigateTo('/')" [class.active]="isActive('/')">Trang chủ</a></li>
                 <li><a (click)="navigateTo('/about')" [class.active]="isActive('/about')">Giới Thiệu</a></li>
-                <li><a routerLink="/service" routerLinkActive="active" ariaCurrentWhenActive="page">Dịch Vụ</a></li>
-                <li><a routerLink="/product" routerLinkActive="active" ariaCurrentWhenActive="page">Sản Phẩm</a></li>
-                <li><a routerLink="/blog" routerLinkActive="active" ariaCurrentWhenActive="page">Tin Tức</a></li>
-                <li><a routerLink="/contact" routerLinkActive="active" ariaCurrentWhenActive="page">Liên Hệ</a></li>
+                <li><a (click)="navigateTo('/service')" [class.active]="isActive('/service')">Dịch Vụ</a></li>
+                <li><a (click)="navigateTo('/product')" [class.active]="isActive('/product')" >Sản Phẩm</a></li>
+                <li><a (click)="navigateTo('/blog')" [class.active]="isActive('/blog')" >Tin Tức</a></li>
+                <li><a (click)="navigateTo('/contact')" [class.active]="isActive('/contact')" >Liên Hệ</a></li>
             </ul>
-        </nav>
+        </nav>    
         <!-- .navbar -->
     </div>
 </header>
