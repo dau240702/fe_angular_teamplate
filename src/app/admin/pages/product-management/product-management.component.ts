@@ -47,7 +47,7 @@ export class ProductManagementComponent implements OnInit {
       price: [0, Validators.required],
       stockQuantity: [0, Validators.required],
       categoryId: ['', Validators.required],
-      status: ['', Validators.required],
+      status: ['Mở', Validators.required],
     });
 
     this.editProductForm = this.fb.group({

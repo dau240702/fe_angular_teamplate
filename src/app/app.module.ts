@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {  NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
@@ -20,9 +20,7 @@ import { authInterceptor } from '../service/auth/AuthInterceptor.service';
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    
-    
+    LoginComponent, 
   ],
   imports: [
     BrowserModule,

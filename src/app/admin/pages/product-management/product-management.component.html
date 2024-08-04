@@ -36,10 +36,10 @@
                             <option *ngFor="let category of categories" [value]="category.categoryId">{{ category.name }}</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label for="status">Trạng thái</label>
-                        <input id="status" name="status" formControlName="status" class="form-control" />
-                    </div>
+                    <select id="status" name="status" formControlName="status" class="form-control">
+                        <option value="Mở" selected>Mở</option>
+                        <option value="Đóng">Đóng</option>
+                    </select>
                     <div class="form-group">
                         <label for="description">Mô tả sản phẩm</label>
                         <input id="description" formControlName="description" name="description" class="form-control" />
@@ -91,7 +91,10 @@
                     </div>
                     <div class="form-group">
                         <label for="status">Trạng thái</label>
-                        <input id="status" name="status" formControlName="status" class="form-control" />
+                        <select id="status" name="status" formControlName="status" class="form-control">
+                            <option value="Mở">Mở</option>
+                            <option value="Đóng">Đóng</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="description">Mô tả sản phẩm</label>
@@ -136,7 +139,7 @@
 
                         <ngx-datatable-column name="Giá sản phẩm">
                             <ng-template let-row="row" ngx-datatable-cell-template>
-                                {{ row.price | currency }}
+                                {{ row.price | currency: "VND" }}
                             </ng-template>
                         </ngx-datatable-column>
 

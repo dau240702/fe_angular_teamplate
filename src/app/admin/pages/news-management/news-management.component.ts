@@ -43,7 +43,7 @@ export class NewsManagementComponent implements OnInit {
       title: ['', Validators.required],
       content: ['', Validators.required],
       categoryId: ['', Validators.required],
-      status: ['', Validators.required],
+      status: ['Mở', Validators.required],
       fromDate: ['', Validators.required],
       toDate: ['', Validators.required]
     });

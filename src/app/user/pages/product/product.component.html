@@ -38,8 +38,7 @@
                         </a>
                         <h4>{{ product.name }}</h4>
                         <p class="ingredients">{{ product.description }}</p>
-                        <p class="price">${{ product.price }}</p>
-                    </div>
+                        <p class="price">{{ product.price | currency: "VND" }}</p>                  </div>
                 </div>
             </div>
         </div>
