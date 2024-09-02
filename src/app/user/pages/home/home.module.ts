@@ -1,16 +1,18 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HomeComponent } from './home.component';
-import { ContactModule } from '../contact/contact.module';
+import { RouterModule } from '@angular/router';
+import { CustomDatePipe } from '../../../custom-date.pipe';
 import { AboutModule } from '../about/about.module';
+import { ContactModule } from '../contact/contact.module';
 import { ProductModule } from '../product/product.module';
 import { ServiceModule } from '../service/service.module';
-import {RouterModule} from '@angular/router';
+import { HomeComponent } from './home.component';
 
 @NgModule({
   declarations: [
     HomeComponent,
+    CustomDatePipe
   ],
   imports: [
     FormsModule,

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../../service/auth/auth.service';
 
@@ -7,8 +7,8 @@ import { AuthService } from '../../../../service/auth/auth.service';
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
-export class HeaderComponent implements OnInit{
-  constructor(private router: Router,   private authService: AuthService,) {}
+export class HeaderComponent implements OnInit {
+  constructor(private router: Router, private authService: AuthService,) { }
   ngOnInit(): void {
   }
 
@@ -18,5 +18,14 @@ export class HeaderComponent implements OnInit{
 
   isActive(path: string): boolean {
     return this.router.isActive(path, true);
+  }
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll() {
+    const header = document.querySelector('.header') as HTMLElement;
+    if (window.scrollY > 50) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
   }
 }

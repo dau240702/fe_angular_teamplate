@@ -1,26 +1,25 @@
-import {  NgModule } from '@angular/core';
-import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 
-import { AppComponent } from './app.component';
-import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
-import {
-  DateAdapter,
-  MAT_DATE_FORMATS,
-  MAT_DATE_LOCALE,
-} from '@angular/material/core';
-import { LoginComponent } from './login/login.component';
-import { HttpClientModule, provideHttpClient, withFetch ,withInterceptors} from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  MAT_DATE_FORMATS,
+  MAT_DATE_LOCALE
+} from '@angular/material/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
-import { AppRoutingModule } from './app-routing.module';
+import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
 import { authInterceptor } from '../service/auth/AuthInterceptor.service';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent, 
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

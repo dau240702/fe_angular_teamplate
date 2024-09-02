@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../../../../service/api/api.service';
-import { UserService } from '../../../../service/user.service';
-import { ConstService } from '../../../../service/const.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { ProductDTO } from '../../../../model/product-dto';
+import { ApiService } from '../../../../service/api/api.service';
+import { ConstService } from '../../../../service/const.service';
 import { NotificationService } from '../../../../service/Notification/notification.service';
+import { UserService } from '../../../../service/user.service';
 
 @Component({
   selector: 'app-product-management',
@@ -47,7 +47,7 @@ export class ProductManagementComponent implements OnInit {
       price: [0, Validators.required],
       stockQuantity: [0, Validators.required],
       categoryId: ['', Validators.required],
-      status: ['Mở', Validators.required],
+      status: ['', Validators.required],
     });
 
     this.editProductForm = this.fb.group({

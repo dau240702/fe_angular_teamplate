@@ -339,8 +339,8 @@
               <img [src]="getFullImageUrl(post.excerptImage)" class="img-fluid" alt="image" />
             </div>
             <div class="meta">
-              <span class="post-date">{{ post.createdAt | date:'EEEE, d MMMM' }}</span>
-              <span class="post-author"> / {{ post.author }}</span>
+                <span class="post-date">{{ post.createdAt | customDate }}</span>
+                <span class="post-author"> / {{ post.createbyName }}</span>
             </div>
             <h3 class="post-title">{{ post.title }}</h3>
             <p>{{ post.content | slice:0:150 }}...</p>

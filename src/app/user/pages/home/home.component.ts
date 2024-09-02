@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Swiper } from 'swiper';
-import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 // @ts-ignore
 import PureCounter from '@srexi/purecounterjs';
 import { ApiService } from '../../../../service/api/api.service';
@@ -16,7 +16,7 @@ export class HomeComponent implements OnInit {
   posts: any[] = [];
   filteredPosts: { [key: string]: any[] } = {};
   activeCategory: string = '';
-  childCategories: any[] = []; // Thêm thuộc tính lưu các category con
+  childCategories: any[] = []; 
   baseUrl: string = 'http://localhost:8081'; 
   recentPosts: any[] = [];
 
@@ -46,7 +46,6 @@ export class HomeComponent implements OnInit {
     this.apiService.get(ConstService.GetAllPost).subscribe(
       (data) => {
         this.posts = data;
-        // Sắp xếp posts theo ngày tạo giảm dần và lấy 4 bài mới nhất
         this.recentPosts = this.posts
           .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
           .slice(0, 4);
@@ -58,7 +57,7 @@ export class HomeComponent implements OnInit {
     );
   }
   getFullImageUrl(imagePath: string): string {
-    if (!imagePath) return ''; // Trả về chuỗi rỗng nếu không có đường dẫn
+    if (!imagePath) return ''; 
     return `${this.baseUrl}${imagePath}`;
   }
 

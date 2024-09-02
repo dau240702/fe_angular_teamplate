@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
       password: ['', Validators.required],
     });
   }
-
+  
   ngOnInit(): void {}
 
   Btn_login(): void {

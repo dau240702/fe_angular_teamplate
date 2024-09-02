@@ -1,7 +1,7 @@
+import { isPlatformBrowser } from '@angular/common';
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { StyleManagerService } from '../service/style-manager.service';
-import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-root',
