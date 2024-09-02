@@ -54,10 +54,17 @@ export class HomeComponent implements OnInit {
   loadPosts(): void {
     this.apiService.get(ConstService.GetAllPost).subscribe(
       (data) => {
-        this.posts = data;
+        const currentTime = new Date().getTime();
+        this.posts = data.filter(post => 
+          post.status === "Mở" &&
+          new Date(post.fromDate).getTime() <= currentTime &&
+          new Date(post.toDate).getTime() >= currentTime
+        );
+        
         this.recentPosts = this.posts
           .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
           .slice(0, 4);
+        
         this.filterPosts();
       },
       (error) => {
@@ -65,6 +72,7 @@ export class HomeComponent implements OnInit {
       }
     );
   }
+  
   getFullImageUrl(imagePath: string): string {
     if (!imagePath) return ''; 
     return `${this.baseUrl}${imagePath}`;

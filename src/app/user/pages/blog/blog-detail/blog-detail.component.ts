@@ -62,7 +62,14 @@ export class BlogDetailComponent implements OnInit {
   loadPosts(): void {
     this.apiService.get(ConstService.GetAllPost).subscribe(
       (data) => {
-        this.posts = data;
+        const currentTime = new Date().getTime();
+        this.posts = data.filter(post => 
+          post.status === "Mở" &&
+          new Date(post.fromDate).getTime() <= currentTime &&
+          new Date(post.toDate).getTime() >= currentTime
+        );
+ 
+        
         this.filterPosts();
       },
       (error) => {
