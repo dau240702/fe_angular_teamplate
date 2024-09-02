@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { CustomDatePipe } from '../../../custom-date.pipe';
+import { SharedModule } from '../../../shared.module';
 import { AboutModule } from '../about/about.module';
 import { ContactModule } from '../contact/contact.module';
 import { ProductModule } from '../product/product.module';
@@ -12,7 +12,6 @@ import { HomeComponent } from './home.component';
 @NgModule({
   declarations: [
     HomeComponent,
-    CustomDatePipe
   ],
   imports: [
     FormsModule,
@@ -21,8 +20,8 @@ import { HomeComponent } from './home.component';
     AboutModule,
     ProductModule,
     ServiceModule,
-    RouterModule
-
+    RouterModule,
+    SharedModule
   ], 
 
   exports: [HomeComponent],

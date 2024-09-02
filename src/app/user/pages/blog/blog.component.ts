@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ApiService } from '../../../../service/api/api.service';
 import { ConstService } from '../../../../service/const.service';
 
@@ -15,13 +16,19 @@ export class BlogComponent implements OnInit {
   promotionNews: any[] = [];
   baseUrl: string = 'http://localhost:8081'; 
 
-  constructor(private apiService: ApiService) {}
+  constructor(    private router: Router,private apiService: ApiService) {}
 
   ngOnInit() {
     this.loadCategories();
     this.loadPosts();
   }
+  navigateTo(path: string) {
+    this.router.navigate([path]);
+  }
 
+  isActive(path: string): boolean {
+    return this.router.isActive(path, true);
+  }
   loadCategories(): void {
     this.apiService.get(ConstService.GetAllCategory).subscribe(
       (data) => {

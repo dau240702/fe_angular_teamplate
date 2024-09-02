@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Swiper } from 'swiper';
 import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 // @ts-ignore
+import { Router } from '@angular/router';
 import PureCounter from '@srexi/purecounterjs';
 import { ApiService } from '../../../../service/api/api.service';
 import { ConstService } from '../../../../service/const.service';
@@ -21,6 +22,7 @@ export class HomeComponent implements OnInit {
   recentPosts: any[] = [];
 
   constructor(
+    private router: Router,
     private apiService: ApiService
   ) { }
   ngOnInit() {
@@ -30,6 +32,13 @@ export class HomeComponent implements OnInit {
     this.loadPosts();
   }
   
+  navigateTo(path: string) {
+    this.router.navigate([path]);
+  }
+
+  isActive(path: string): boolean {
+    return this.router.isActive(path, true);
+  }
   loadCategories(): void {
     this.apiService.get(ConstService.GetAllCategory).subscribe(
       (data) => {

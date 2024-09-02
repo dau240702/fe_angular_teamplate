@@ -28,8 +28,9 @@ export class ConstService {
   public static UpdateProduct = 'product/update/';
   public static DeleteProduct = 'product/delete';
 
-  // product
+  // post
   public static GetAllPost = 'post/all';
+  public static GetPostId = 'post';
   public static AddPost = 'post';
   public static UpdatePost = 'post/update/';
   public static DeletePost = 'post/delete';

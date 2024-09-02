@@ -1,8 +1,9 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { SharedModule } from '../../../shared.module';
 import { BlogComponent } from './blog.component';
-import {RouterModule} from '@angular/router';
 
 @NgModule({
   declarations: [BlogComponent],
@@ -10,8 +11,8 @@ import {RouterModule} from '@angular/router';
     FormsModule,
     CommonModule,
     ReactiveFormsModule,
-    RouterModule
-
+    RouterModule,
+    SharedModule
 
   ],
   schemas: [
@@ -19,4 +20,4 @@ import {RouterModule} from '@angular/router';
   ],
   exports: [BlogComponent],
 })
-export class BlogModule {}
+export class BlogModule { }
