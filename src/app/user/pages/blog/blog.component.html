@@ -26,58 +26,46 @@
         <section id="blog-posts" class="blog-posts section">
           <div class="container">
             <div class="row gy-4">
-              <div *ngFor="let post of hotNews" class="col-lg-6">
+              <div *ngFor="let post of pagedHotNews" class="col-lg-6">
                 <article>
                   <div class="post-img">
-                    <img
-                      [src]="getFullImageUrl(post.excerptImage)"
-                      alt="{{ post.title }}"
-                      class="img-fluid"
-                    />
+                    <img [src]="getFullImageUrl(post.excerptImage)" alt="{{ post.title }}" class="img-fluid" />
                   </div>
-
                   <p class="post-category">
-                    {{ post.createdAt | customDate }}/ {{ post.createbyName }}
+                    {{ post.createdAt | customDate }} / {{ post.createbyName }}
                   </p>
-
                   <h2 class="title">
-                    <a
-                      (click)="navigateToPostDetail(post.postId)"
-                      class="readmore stretched-link"
-                      style="font-size: 20px; font-weight: 700"
-                    >
+                    <a (click)="navigateToPostDetail(post.postId)" class="readmore stretched-link" style="font-size: 20px; font-weight: 700">
                       {{ post.title }}
                     </a>
                   </h2>
                 </article>
               </div>
-              <!-- End post list item -->
             </div>
           </div>
         </section>
-        <!-- /Blog Posts Section -->
-
-        <!-- Blog Pagination Section -->
+        
         <section id="blog-pagination" class="blog-pagination section">
           <div class="container">
             <div class="d-flex justify-content-center">
               <ul>
                 <li>
-                  <a href="#"><i class="bi bi-chevron-left"></i></a>
+                  <a href="#" (click)="previousPage($event)"><i class="bi bi-chevron-left"></i></a>
                 </li>
-                <li><a href="#">1</a></li>
-                <li><a href="#" class="active">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li>...</li>
-                <li><a href="#">10</a></li>
+                <li *ngFor="let page of [].constructor(totalPages); let i = index">
+                  <a href="#" [class.active]="currentPage === i + 1" (click)="goToPage(i + 1, $event)">
+                    {{ i + 1 }}
+                  </a>
+                </li>
                 <li>
-                  <a href="#"><i class="bi bi-chevron-right"></i></a>
+                  <a href="#" (click)="nextPage($event)"><i class="bi bi-chevron-right"></i></a>
                 </li>
               </ul>
             </div>
           </div>
         </section>
+        
+        
         <!-- /Blog Pagination Section -->
       </div>
       <div class="col-lg-4 sidebar">
