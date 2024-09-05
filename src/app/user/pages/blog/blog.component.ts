@@ -80,6 +80,15 @@ export class BlogComponent implements OnInit {
     }
   }
 
+  navigateToPostDetail(postId: number) {
+    this.apiService.put(`${ConstService.ViewcountPost}/${postId}/increment-view-count`, {})
+      .subscribe(() => {
+        this.router.navigate(['/blog/detail', postId]);
+      });
+  }
+  
+  
+
   getFullImageUrl(imagePath: string): string {
     if (!imagePath) return ''; 
     return `${this.baseUrl}${imagePath}`;

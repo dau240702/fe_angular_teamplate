@@ -96,7 +96,13 @@ export class HomeComponent implements OnInit {
   setActiveCategory(categoryName: string): void {
     this.activeCategory = categoryName;
   }
-
+  navigateToPostDetail(postId: number) {
+    this.apiService.put(`${ConstService.ViewcountPost}/${postId}/increment-view-count`, {})
+      .subscribe(() => {
+        this.router.navigate(['/blog/detail', postId]);
+      });
+  }
+  
   Slider() {
     new Swiper('.slides-1', {
       modules: [Navigation, Pagination, Autoplay],

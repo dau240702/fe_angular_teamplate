@@ -34,6 +34,7 @@ export class ConstService {
   public static AddPost = 'post';
   public static UpdatePost = 'post/update/';
   public static DeletePost = 'post/delete';
+  public static ViewcountPost = 'post';
 
   // contact
   public static GetAllcontacts = 'contacts';

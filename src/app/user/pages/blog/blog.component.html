@@ -42,13 +42,12 @@
 
                   <h2 class="title">
                     <a
-                    (click)="navigateTo('/blog/detail/' + post.postId)"
-                    [class.active]="isActive('/blog/detail/' + post.postId)"
-                    class="readmore stretched-link"
-                  
+                      (click)="navigateToPostDetail(post.postId)"
+                      class="readmore stretched-link"
                       style="font-size: 20px; font-weight: 700"
-                      >{{ post.title }}</a
                     >
+                      {{ post.title }}
+                    </a>
                   </h2>
                 </article>
               </div>
@@ -99,7 +98,7 @@
                   </h4>
                   <p>{{ formatDate(post.createdAt) }}</p>
                   <a
-                    (click)="navigateTo('/blog/detail/' + post.postId)"
+                    (click)="navigateToPostDetail(post.postId)"
                     [class.active]="isActive('/blog/detail/' + post.postId)"
                     class="readmore stretched-link"
                   >

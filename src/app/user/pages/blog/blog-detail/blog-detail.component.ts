@@ -20,17 +20,33 @@ export class BlogDetailComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      const postId = params['id'];
-      this.loadPostDetail(postId);
+    this.route.paramMap.subscribe(params => {
+      const postId = +params.get('postId')!; 
+  
+      if (postId) {
+        this.postId = postId;
+        this.incrementViewCount(this.postId);
+        this.loadPostDetail(this.postId);
+      } else {
+        console.error('postId not found in URL');
+      }
     });
+  
     this.loadCategories();
     this.loadPosts();
   }
+  
+
+
+  incrementViewCount(postId: number) {
+    this.apiService.put(`${ConstService.ViewcountPost}/${postId}/increment-view-count`, {})
+      .subscribe(() => {
+        console.log(`Viewcount for post ${postId} incremented`);
+      });
+  }
   loadPostDetail(id: any): void {
-    this.postId = id;
-    const url = `${ConstService.GetPostId}/${this.postId}`; // Kết hợp ID vào URL
-    this.apiService.get(url).subscribe(
+    id = this.postId
+    this.apiService.get(`${ConstService.GetPostId}/${id}`).subscribe(
       (data) => {
         this.post = data;
       },
@@ -51,7 +67,6 @@ export class BlogDetailComponent implements OnInit {
     this.apiService.get(ConstService.GetAllCategory).subscribe(
       (data) => {
         this.categories = data;
-        this.filterPosts();
       },
       (error) => {
         console.error('Error loading categories:', error);
@@ -63,13 +78,13 @@ export class BlogDetailComponent implements OnInit {
     this.apiService.get(ConstService.GetAllPost).subscribe(
       (data) => {
         const currentTime = new Date().getTime();
-        this.posts = data.filter(post => 
+        this.posts = data.filter(post =>
           post.status === "Mở" &&
           new Date(post.fromDate).getTime() <= currentTime &&
           new Date(post.toDate).getTime() >= currentTime
         );
- 
-        
+
+
         this.filterPosts();
       },
       (error) => {
@@ -110,4 +125,12 @@ export class BlogDetailComponent implements OnInit {
       day: 'numeric'
     });
   }
+
+  navigateToPostDetail(postId: number) {
+    this.apiService.put(`${ConstService.ViewcountPost}/${postId}/increment-view-count`, {})
+      .subscribe(() => {
+        this.router.navigate(['/blog/detail', postId]);
+      });
+  }
+  
 }

@@ -423,8 +423,7 @@
           <h3 class="post-title">{{ post.title }}</h3>
           <p>{{ post.content | slice : 0 : 150 }}...</p>
           <a
-            (click)="navigateTo('/blog/detail/' + post.postId)"
-            [class.active]="isActive('/blog/detail/' + post.postId)"
+            (click)="navigateToPostDetail(post.postId)"
             class="readmore stretched-link"
           >
             <span>Đọc Thêm</span><i class="bi bi-arrow-right"></i>
