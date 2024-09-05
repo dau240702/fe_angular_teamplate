@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, finalize, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ConstService } from '../const.service';
 
 
@@ -46,4 +46,5 @@ export class ApiService {
   putFormData(bareUrl: string, formData: FormData): Observable<any> {
     return this.http.put<any>(`${this.endpoint}/${bareUrl}`, formData);
   }
+  
 }

@@ -1,8 +1,8 @@
-import { ContactDTO } from './../../../../model/ContactDTO';
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../../../service/api/api.service';
-import { UserService } from '../../../../service/user.service';
 import { ConstService } from '../../../../service/const.service';
+import { UserService } from '../../../../service/user.service';
+import { ContactDTO } from './../../../../model/ContactDTO';
 
 import { NotificationService } from '../../../../service/Notification/notification.service';
 

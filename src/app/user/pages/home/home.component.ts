@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Swiper } from 'swiper';
-import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 // @ts-ignore
+import { Router } from '@angular/router';
 import PureCounter from '@srexi/purecounterjs';
 import { ApiService } from '../../../../service/api/api.service';
 import { ConstService } from '../../../../service/const.service';
@@ -16,11 +17,12 @@ export class HomeComponent implements OnInit {
   posts: any[] = [];
   filteredPosts: { [key: string]: any[] } = {};
   activeCategory: string = '';
-  childCategories: any[] = []; // Thêm thuộc tính lưu các category con
+  childCategories: any[] = []; 
   baseUrl: string = 'http://localhost:8081'; 
   recentPosts: any[] = [];
 
   constructor(
+    private router: Router,
     private apiService: ApiService
   ) { }
   ngOnInit() {
@@ -30,6 +32,13 @@ export class HomeComponent implements OnInit {
     this.loadPosts();
   }
   
+  navigateTo(path: string) {
+    this.router.navigate([path]);
+  }
+
+  isActive(path: string): boolean {
+    return this.router.isActive(path, true);
+  }
   loadCategories(): void {
     this.apiService.get(ConstService.GetAllCategory).subscribe(
       (data) => {
@@ -45,11 +54,17 @@ export class HomeComponent implements OnInit {
   loadPosts(): void {
     this.apiService.get(ConstService.GetAllPost).subscribe(
       (data) => {
-        this.posts = data;
-        // Sắp xếp posts theo ngày tạo giảm dần và lấy 4 bài mới nhất
+        const currentTime = new Date().getTime();
+        this.posts = data.filter(post => 
+          post.status === "Mở" &&
+          new Date(post.fromDate).getTime() <= currentTime &&
+          new Date(post.toDate).getTime() >= currentTime
+        );
+        
         this.recentPosts = this.posts
           .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
           .slice(0, 4);
+        
         this.filterPosts();
       },
       (error) => {
@@ -57,8 +72,9 @@ export class HomeComponent implements OnInit {
       }
     );
   }
+  
   getFullImageUrl(imagePath: string): string {
-    if (!imagePath) return ''; // Trả về chuỗi rỗng nếu không có đường dẫn
+    if (!imagePath) return ''; 
     return `${this.baseUrl}${imagePath}`;
   }
 
@@ -80,7 +96,13 @@ export class HomeComponent implements OnInit {
   setActiveCategory(categoryName: string): void {
     this.activeCategory = categoryName;
   }
-
+  navigateToPostDetail(postId: number) {
+    this.apiService.put(`${ConstService.ViewcountPost}/${postId}/increment-view-count`, {})
+      .subscribe(() => {
+        this.router.navigate(['/blog/detail', postId]);
+      });
+  }
+  
   Slider() {
     new Swiper('.slides-1', {
       modules: [Navigation, Pagination, Autoplay],

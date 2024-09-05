@@ -2,16 +2,18 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-import {AppLayoutRoutingModule } from './app-layout-routing.module';
-import { AppLayoutComponent } from './app-layout.component';
-import { HomeAppModule } from '../home/home.module';
-import { SharedModule } from '../../shared/app.shared.module';
 import { IonicModule } from '@ionic/angular';
+import { SharedModule } from '../../shared/app.shared.module';
+import { BlogDetailModule } from '../blog/blog-detail/blog-detail.module';
 import { BlogModule } from '../blog/blog.module';
+import { HomeAppModule } from '../home/home.module';
+import { AppLayoutRoutingModule } from './app-layout-routing.module';
+import { AppLayoutComponent } from './app-layout.component';
 
 
 @NgModule({
-  declarations: [AppLayoutComponent],
+  declarations: [AppLayoutComponent,
+  ],
   imports: [
     CommonModule,
     BrowserModule,
@@ -20,7 +22,8 @@ import { BlogModule } from '../blog/blog.module';
     SharedModule,
     HomeAppModule,
     IonicModule,
-    BlogModule
+    BlogModule,
+    BlogDetailModule,
 
   ],
   exports: [AppLayoutComponent],

@@ -1,72 +1,106 @@
 <!-- ======= Breadcrumbs ======= -->
-<div class="breadcrumbs d-flex align-items-center" style="background-image: url('../../../../assets/user/images/blog-header.jpg');">
-    <div class="container position-relative d-flex flex-column align-items-center">
-
-        <h2>Blog</h2>
-        <ol>
-            <li><a href="index.html">Home</a></li>
-            <li>Blog</li>
-        </ol>
-
-    </div>
+<div
+  class="breadcrumbs d-flex align-items-center"
+  style="
+    background-image: url('../../../../assets/user/images/blog-header.jpg');
+  "
+>
+  <div
+    class="container position-relative d-flex flex-column align-items-center"
+  >
+    <h2>Blog</h2>
+    <ol>
+      <li><a href="index.html">Home</a></li>
+      <li>Blog</li>
+    </ol>
+  </div>
 </div>
 <!-- End Breadcrumbs -->
 
 <!-- ======= Blog Section ======= -->
 <section id="blog" class="blog">
-    <div class="container" data-aos="fade-up">
-
-        <div class="row g-5">
-
-            <div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
-
-                <div class="row gy-5 posts-list">
-
-                    <div *ngFor="let post of hotNews" class="col-md-6">
-                        <article class="blog-post">
-                          <img [src]="getFullImageUrl(post.excerptImage)" alt="{{ post.title }}" class="img-fluid">
-                          <h3>{{ post.title }}</h3>
-                          <p>{{ post.content | slice:0:100 }}...</p>
-                          <p>Ngày đăng: {{ formatDate(post.createdAt) }}</p>
-                          <a [routerLink]="['/blog', post.id]">Đọc thêm</a>
-                        </article>
-                      </div>
-                </div>
-                <!-- End blog posts list -->
-
+  <div class="container" data-aos="fade-up">
+    <div class="row">
+      <div class="col-lg-8">
+        <!-- Blog Posts Section -->
+        <section id="blog-posts" class="blog-posts section">
+          <div class="container">
+            <div class="row gy-4">
+              <div *ngFor="let post of pagedHotNews" class="col-lg-6">
+                <article>
+                  <div class="post-img">
+                    <img [src]="getFullImageUrl(post.excerptImage)" alt="{{ post.title }}" class="img-fluid" />
+                  </div>
+                  <p class="post-category">
+                    {{ post.createdAt | customDate }} / {{ post.createbyName }}
+                  </p>
+                  <h2 class="title">
+                    <a (click)="navigateToPostDetail(post.postId)" class="readmore stretched-link" style="font-size: 20px; font-weight: 700">
+                      {{ post.title }}
+                    </a>
+                  </h2>
+                </article>
+              </div>
             </div>
-
-            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="400">
-
-                <div class="sidebar ps-lg-4">
-
-                    <div class="sidebar-item recent-posts">
-                        <h3 class="sidebar-title">Tin Tức khuyến mãi</h3>
-
-                        <div class="mt-3">
-
-                            <div *ngFor="let post of promotionNews"  class="post-item mt-3">
-                                <img [src]="getFullImageUrl(post.excerptImage)" alt="{{ post.title }}" class="img-fluid">
-                                <div>
-                                    <h4>{{ post.title }}</h4>
-                                    <p>Ngày đăng: {{ formatDate(post.createdAt) }}</p>
-                                    <a [routerLink]="['/blog', post.id]">Xem chi tiết</a>
-                                </div>
-                            </div>
-                
-
-                        </div>
-
-                    </div>
-                    <!-- End sidebar recent posts-->
-
-                </div>
-                <!-- End Blog Sidebar -->
-
+          </div>
+        </section>
+        
+        <section id="blog-pagination" class="blog-pagination section">
+          <div class="container">
+            <div class="d-flex justify-content-center">
+              <ul>
+                <li>
+                  <a href="#" (click)="previousPage($event)"><i class="bi bi-chevron-left"></i></a>
+                </li>
+                <li *ngFor="let page of [].constructor(totalPages); let i = index">
+                  <a href="#" [class.active]="currentPage === i + 1" (click)="goToPage(i + 1, $event)">
+                    {{ i + 1 }}
+                  </a>
+                </li>
+                <li>
+                  <a href="#" (click)="nextPage($event)"><i class="bi bi-chevron-right"></i></a>
+                </li>
+              </ul>
             </div>
+          </div>
+        </section>
+        
+        
+        <!-- /Blog Pagination Section -->
+      </div>
+      <div class="col-lg-4 sidebar">
+        <div class="widgets-container">
+          <div class="sidebar-item recent-posts">
+            <h3 class="sidebar-title">Tin Tức khuyến mãi</h3>
 
+            <div class="mt-3">
+              <div *ngFor="let post of promotionNews" class="post-item mt-3">
+                <img
+                  [src]="getFullImageUrl(post.excerptImage)"
+                  alt="{{ post.title }}"
+                  class="flex-shrink-0"
+                />
+                <div>
+                  <h4 class="post_title">
+                    {{ post.title | slice : 0 : 30 }}...
+                  </h4>
+                  <p>{{ formatDate(post.createdAt) }}</p>
+                  <a
+                    (click)="navigateToPostDetail(post.postId)"
+                    [class.active]="isActive('/blog/detail/' + post.postId)"
+                    class="readmore stretched-link"
+                  >
+                    <span>Đọc Thêm</span><i class="bi bi-arrow-right"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End sidebar recent posts-->
         </div>
-
+        <!-- End Blog Sidebar -->
+      </div>
     </div>
+  </div>
 </section>
 <!-- End Blog Section -->
