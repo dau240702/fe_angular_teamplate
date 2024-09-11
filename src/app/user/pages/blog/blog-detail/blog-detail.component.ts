@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CommentDTO } from '../../../../../model/CommentDTO';
 import { ApiService } from '../../../../../service/api/api.service';
 import { ConstService } from '../../../../../service/const.service';
+import { NotificationService } from '../../../../../service/Notification/notification.service';
 
 @Component({
   selector: 'app-blog-detail',
@@ -9,6 +12,7 @@ import { ConstService } from '../../../../../service/const.service';
   styleUrl: './blog-detail.component.css'
 })
 export class BlogDetailComponent implements OnInit {
+  commentForm: FormGroup;
   categories: any[] = [];
   posts: any[] = [];
   postId: number | undefined;
@@ -16,13 +20,25 @@ export class BlogDetailComponent implements OnInit {
   promotionNews: any[] = [];
   baseUrl: string = 'http://localhost:8081';
   post: any;
-  constructor(private router: Router, private apiService: ApiService, private route: ActivatedRoute,
-  ) { }
+  comments: any[] = [];
+  commentsCount: number = 0;
+  
+  constructor(private router: Router, private apiService: ApiService, private route: ActivatedRoute, private fb: FormBuilder, private notificationService: NotificationService
+
+  ) {
+
+    this.commentForm = this.fb.group({
+      name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      content: ['', Validators.required]
+    });
+
+  }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
-      const postId = +params.get('postId')!; 
-  
+      const postId = +params.get('postId')!;
+
       if (postId) {
         this.postId = postId;
         this.incrementViewCount(this.postId);
@@ -31,12 +47,37 @@ export class BlogDetailComponent implements OnInit {
         console.error('postId not found in URL');
       }
     });
-  
+    this.getCommentsByPostId();
     this.loadCategories();
     this.loadPosts();
   }
-  
-
+  getCommentsByPostId() {
+    this.apiService.get(`${ConstService.GetAllCommentsByPostId}/${this.postId}`)
+      .subscribe(
+        (response) => {
+          this.comments = response;
+          this.commentsCount = this.comments.length; ; 
+        },
+        (error) => {
+          console.error('Error fetching comments:', error);
+        }
+      );
+  }
+  onSubmit() {
+    if (this.commentForm.valid) {
+      const contactData: CommentDTO = this.commentForm.value;
+      contactData.postId = this.postId;
+      this.apiService.post(ConstService.AddComment, contactData).subscribe(
+        (response: CommentDTO) => {
+          this.notificationService.success('Bình luận của bạn đã được gửi thành công.');
+          this.commentForm.reset();
+        },
+        (error) => {
+          this.notificationService.error('Có lỗi xảy ra khi gửi bình luận.');
+        }
+      );
+    }
+  }
 
   incrementViewCount(postId: number) {
     this.apiService.put(`${ConstService.ViewcountPost}/${postId}/increment-view-count`, {})
@@ -132,5 +173,5 @@ export class BlogDetailComponent implements OnInit {
         this.router.navigate(['/blog/detail', postId]);
       });
   }
-  
+
 }

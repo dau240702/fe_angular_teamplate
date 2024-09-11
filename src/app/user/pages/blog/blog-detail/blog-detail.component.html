@@ -53,7 +53,7 @@
               </li>
               <li class="d-flex align-items-center">
                 <i class="bi bi-chat-dots"></i>
-                <a href="blog-details.html">12 Comments</a>
+                <a href="blog-details.html">{{ commentsCount }} Comments</a>
               </li>
             </ul>
           </div>
@@ -84,27 +84,21 @@
         <!-- End blog post -->
 
         <div class="comments">
-          <h4 class="comments-count">8 Comments</h4>
-
-          <div id="comment-1" class="comment">
+          <h4 class="comments-count">{{ commentsCount }} Comments</h4>
+          <div id="comment-1" *ngFor="let comment of comments" class="comment">
             <div class="d-flex">
               <div class="comment-img">
                 <img
-                  src="../../../../assets/user/images/blog/comments-1.jpg"
+                  src="../../../../assets/user/images/blog/default.png"
                   alt=""
                 />
               </div>
               <div>
                 <h5>
-                  <a href="">Georgia Reader</a>
+                  <a href="">{{ comment.content }}</a>
                 </h5>
-                <time datetime="2020-01-01">01 Jan,2022</time>
-                <p>
-                  Et rerum totam nisi. Molestiae vel quam dolorum vel voluptatem
-                  et et. Est ad aut sapiente quis molestiae est qui cum soluta.
-                  Vero aut rerum vel. Rerum quos laboriosam placeat ex qui. Sint
-                  qui facilis et.
-                </p>
+                <time>{{ comment.createDate  | customDate  }}</time>
+                <p>{{ comment.name }}</p>
               </div>
             </div>
           </div>
@@ -115,48 +109,26 @@
               Your email address will not be published. Required fields are
               marked *
             </p>
-            <form action="">
+            <form [formGroup]="commentForm" *ngIf="this.commentForm" (ngSubmit)="onSubmit()" method="post" role="form" class="php-email-form p-3 p-md-4">
+
               <div class="row">
                 <div class="col-md-6 form-group">
-                  <input
-                    name="name"
-                    type="text"
-                    class="form-control"
-                    placeholder="Your Name*"
-                  />
+                  <input type="text" formControlName="name" class="form-control" id="name" placeholder="Your Name" required>
                 </div>
                 <div class="col-md-6 form-group">
-                  <input
-                    name="email"
-                    type="text"
-                    class="form-control"
-                    placeholder="Your Email*"
-                  />
+                  <input type="email" formControlName="email" class="form-control" id="email" placeholder="Your Email" required>
                 </div>
               </div>
               <div class="row">
                 <div class="col form-group">
-                  <input
-                    name="website"
-                    type="text"
-                    class="form-control"
-                    placeholder="Your Website"
-                  />
-                </div>
-              </div>
-              <div class="row">
-                <div class="col form-group">
-                  <textarea
-                    name="comment"
-                    class="form-control"
-                    placeholder="Your Comment*"
-                  ></textarea>
+                  <textarea formControlName="content" class="form-control" rows="5" placeholder="Message" required></textarea>
                 </div>
               </div>
               <button type="submit" class="btn btn-primary">
                 Post Comment
               </button>
             </form>
+            
           </div>
         </div>
         <!-- End blog comments -->

@@ -1,16 +1,22 @@
 <div class="page-index">
-    <!-- ======= Header ======= -->
-    <app-header></app-header>
-    <!-- End Header -->
-    <main class="main">
-        <router-outlet></router-outlet>
-    </main>
-    <!-- End #main -->
-
-    <!-- ======= Footer ======= -->
-    <!-- End Footer -->
-    <app-footer></app-footer>
-    <!-- End Footer -->
-    <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-</div>
+  <!-- ======= Header ======= -->
+  <app-header></app-header>
+  <!-- End Header -->
+  <main class="main">
+    <router-outlet></router-outlet>
+  </main>
+  <!-- End #main -->
+  <!-- ======= Footer ======= -->
+  <!-- End FoFoter -->
+  <app-footer></app-footer>
+  <!-- End Footer -->
+  <div class="wrapper">
+    <div class="coccoc-alo-phone coccoc-alo-green coccoc-alo-show">
+      <div class="coccoc-alo-ph-circle"></div>
+      <div class="coccoc-alo-ph-circle-fill"></div>
+      <div class="coccoc-alo-ph-img-circle"></div>
+    </div>
+  </div>
+  <div class="back-to-top" (click)="scrollToTop()" [class.show]="isShow">
+    <i class="bi bi-arrow-up-circle-fill"></i>  </div>
+  </div>

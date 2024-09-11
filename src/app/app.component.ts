@@ -53,8 +53,7 @@ export class AppComponent implements OnInit {
       'assets/user/vendor/glightbox/css/glightbox.min.css',
       'assets/user/vendor/swiper/swiper-bundle.min.css',
       'assets/user/vendor/remixicon/remixicon.css',
-      'assets/user/css/main.css'
-    );
+      'assets/user/css/main.css',    );
   }
 
   loadAdminScripts() {

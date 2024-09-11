@@ -19,7 +19,7 @@ export class ConstService {
   // category
   public static GetAllCategory = 'categories/all';
   public static AddCategory = 'categories';
-  public static UpdateCategory = 'categories/update';
+  public static UpdateCategory = 'categories/update'; 
   public static DeleteCategory = 'categories/delete';
 
   // product
@@ -39,4 +39,14 @@ export class ConstService {
   // contact
   public static GetAllcontacts = 'contacts';
   public static Addcontacts = 'contacts';
+
+  // comment
+  public static GetAllCommentsByPostId = 'comments/post';
+  public static GetCommentById = 'comments';
+  public static AddComment = 'comments';
+  public static UpdateComment = 'comments/update/';
+  public static DeleteComment = 'comments/delete/'; 
+
+
+
 }
