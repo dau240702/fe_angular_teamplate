@@ -29,19 +29,24 @@
         </ul>
 
         <div class="tab-content" data-aos="fade-up" data-aos-delay="300">
-            <!-- Tạo nội dung các tab từ danh sách sản phẩm -->
             <div *ngFor="let category of childCategories" class="tab-pane fade" [ngClass]="{'active show': category.name === activeCategory}" [id]="'menu-' + category.name.toLowerCase()">
-                <div class="row gy-5">
-                    <div *ngFor="let product of filteredProducts[category.name]" class="col-lg-4 menu-item">
-                        <a [href]="getFullImageUrl(product.imageUrlPath)" class="glightbox">
-                            <img [src]="getFullImageUrl(product.imageUrlPath)" class="menu-img img-fluid" alt="" />
-                        </a>
-                        <h4>{{ product.name }}</h4>
-                        <p class="ingredients">{{ product.description }}</p>
-                        <p class="price">{{ product.price | currency: "VND" }}</p>                  </div>
+              <div class="row gy-5">
+                <div *ngFor="let product of filteredProducts[category.name]" class="col-lg-4 menu-item">
+                  <a class="glightbox">
+                    <img [src]="getFullImageUrl(product.imageUrlPath)" class="menu-img img-fluid" alt="{{ product.name }}" />
+                  </a>
+                  <div class="details">
+                    <h4>{{ product.name }}</h4>
+                    <p class="ingredients">{{ product.description }}</p>
+                    <p class="price">{{ product.price | currency: 'VND' }}</p>
+                  </div>
                 </div>
+              </div>
             </div>
-        </div>
+          </div>
+          
+          
     </div>
 </section>
+
 <!-- End Portfolio Section -->

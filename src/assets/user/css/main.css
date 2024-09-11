@@ -2224,8 +2224,8 @@ section {
 .wrapper {
     display: block;
     position: fixed; /* Đặt vị trí cố định trên trang */
-    bottom: 10%;     /* Khoảng cách so với đáy trang */
-    right: 20px;      /* Cách trái 20px */
+    bottom: 7%;     /* Khoảng cách so với đáy trang */
+    right: 10px;      /* Cách trái 20px */
     z-index: 999;    /* Đảm bảo phần tử nằm trên các phần tử khác */
 }
 
