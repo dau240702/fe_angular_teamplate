@@ -68,11 +68,10 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Thống kê số lượng sản phẩm trong cửa hàng</h5>
-
+                        <h5 class="card-title">Biểu đồ thống kê</h5>
                         <!-- Bar Chart -->
                         <div>
-                            <canvas id="reportsChart"></canvas>
+                            <app-chart [categoryCounts]="categoryCounts" chartLabel="Thống kê số lượng sản phẩm trong cửa hàng"></app-chart>
                         </div>
                     </div>
                 </div>

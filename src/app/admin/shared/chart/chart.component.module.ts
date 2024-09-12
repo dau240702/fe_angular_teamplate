@@ -3,22 +3,20 @@ import { HttpClientModule } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { ChartModule } from '../../shared/chart/chart.component.module';
-import { HomeComponent } from './home.component';
+import { ChartComponent } from './chart.component';
 
 
 @NgModule({
-  declarations: [HomeComponent],
-  exports: [HomeComponent],
+  declarations: [ChartComponent],
+  exports: [ChartComponent],
 
   imports: [
     CommonModule, // Add CommonModule here
     HttpClientModule,
     NgxDatatableModule,
     FormsModule,
-    ReactiveFormsModule,
-    ChartModule
+    ReactiveFormsModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA], 
 })
-export class HomeManagementModule { }
+export class ChartModule { }

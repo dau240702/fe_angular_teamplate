@@ -3,13 +3,13 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { AppAdminSharedModule } from '../../shared/app-admin.share.module';
+import { CategoryManagementModule } from '../category-management/category-management.module';
+import { ContactManagementModule } from '../contact-management/contact-management.module';
+import { HomeManagementModule } from '../home/home-admin.module';
+import { NewsManagementModule } from '../news-management/news-management.module';
+import { ProductManagementModule } from '../product-management/product-management.module';
 import { MainLayoutRoutingModule } from './main-layout-routing.module';
 import { MainLayoutComponent } from './main-layout.component';
-import { CategoryManagementModule } from '../category-management/category-management.module';
-import { ProductManagementComponent } from '../product-management/product-management.component';
-import { ProductManagementModule } from '../product-management/product-management.module';
-import { ContactManagementModule } from '../contact-management/contact-management.module';
-import { NewsManagementModule } from '../news-management/news-management.module';
 
 @NgModule({
   declarations: [MainLayoutComponent],
@@ -22,7 +22,8 @@ import { NewsManagementModule } from '../news-management/news-management.module'
     CategoryManagementModule,
     ProductManagementModule,
     ContactManagementModule,
-    NewsManagementModule
+    NewsManagementModule,
+    HomeManagementModule
   ],
   exports: [MainLayoutComponent],
 })
