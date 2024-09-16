@@ -45,6 +45,13 @@
         <!-- End Infomation -->
 
         <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" (click)="navigateTo('/admin/mail-management')" [class.active]="isActive('/admin/mail-management')">
+                <i class="bi bi-layout-text-window-reverse"></i><span>Quản lý Mail</span>
+            </a>
+        </li>
+        <!-- End Mail -->
+
+        <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" >
                 <i class="bi bi-box-arrow-right"></i><span (click)="Logout()">Đăng xuất</span>
             </a>

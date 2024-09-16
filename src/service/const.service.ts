@@ -47,6 +47,9 @@ export class ConstService {
   public static UpdateComment = 'comments/update/';
   public static DeleteComment = 'comments/delete/'; 
 
+    // sendmail
+    public static GetAllMail = 'email/all';
+    public static PostMail = 'email/send';
 
 
 }
