@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ElementRef, OnInit, Renderer2 } from '@angula
 import { FormBuilder, FormGroup } from '@angular/forms';
 import jQuery from 'jquery';
 import 'select2';
+import Swal from 'sweetalert2';
 
 import { HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap, throwError } from 'rxjs';
@@ -58,7 +59,13 @@ export class MailManagementComponent implements OnInit,AfterViewInit  {
   loadContacts() {
     this.apiService.get(ConstService.GetAllcontacts).subscribe(
       (response: any[]) => {
-        this.filteredContact = response;
+        // Loại bỏ các email trùng lặp bằng cách sử dụng Set
+        const uniqueEmails = Array.from(new Set(response.map(contact => contact.email)))
+          .map(email => {
+            return response.find(contact => contact.email === email);
+          });
+  
+        this.filteredContact = uniqueEmails;
         this.initializeSelect2();
       },
       (error) => {
@@ -66,6 +73,7 @@ export class MailManagementComponent implements OnInit,AfterViewInit  {
       }
     );
   }
+  
 
   updateFilter(event: any) {
     const val = event.target.value.toLowerCase();
@@ -155,5 +163,31 @@ export class MailManagementComponent implements OnInit,AfterViewInit  {
 
   rowClassFunction = (row: any, index: number) => {
     return index % 2 === 0 ? 'datatable-row-even' : 'datatable-row-odd';
+  }
+
+  deleteMail(id: number) {
+    Swal.fire({
+      title: 'Bạn có chắc chắn muốn xóa?',
+      text: 'Bạn sẽ không thể khôi phục lại dữ liệu này!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Vâng, xóa nó!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.apiService
+          .deleteText(`${ConstService.DeleteMail}/${id}`)
+          .subscribe(
+            (response) => {
+              this.notificationService.success('Xóa sản phẩm thành công.');
+              this.loadEmails();
+            },
+            (error) => {
+              this.notificationService.error('Có lỗi xảy ra khi xóa sản phẩm.');
+            }
+          );
+      }
+    });
   }
 }

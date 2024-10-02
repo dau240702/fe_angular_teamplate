@@ -53,4 +53,11 @@ export class ApiService {
       headers: this.headers
     });
   }
+
+  deleteText(bareURl: string, ): Observable<string> {
+    return this.http.delete(`${this.endpoint}/${bareURl}`, {
+      responseType: 'text',
+      headers: this.headers
+    });
+  }
 }

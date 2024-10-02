@@ -39,6 +39,8 @@ export class ConstService {
   // contact
   public static GetAllcontacts = 'contacts';
   public static Addcontacts = 'contacts';
+  public static Deletecontacts = 'contacts/delete';
+
 
   // comment
   public static GetAllCommentsByPostId = 'comments/post';
@@ -51,5 +53,11 @@ export class ConstService {
     public static GetAllMail = 'email/all';
     public static PostMail = 'email/send';
 
+    public static DeleteMail = 'email/delete';
+
+  // Booking
+  public static GetAllbookings = 'bookings';
+  public static Addbookings = 'bookings';
+  public static Deletebookings = 'bookings/delete';
 
 }
