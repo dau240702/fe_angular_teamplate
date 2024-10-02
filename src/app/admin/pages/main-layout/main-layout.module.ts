@@ -6,6 +6,7 @@ import { AppAdminSharedModule } from '../../shared/app-admin.share.module';
 import { CategoryManagementModule } from '../category-management/category-management.module';
 import { ContactManagementModule } from '../contact-management/contact-management.module';
 import { HomeManagementModule } from '../home/home-admin.module';
+import { MailManagementModule } from '../mail-management/mail-management.module';
 import { NewsManagementModule } from '../news-management/news-management.module';
 import { ProductManagementModule } from '../product-management/product-management.module';
 import { MainLayoutRoutingModule } from './main-layout-routing.module';
@@ -23,7 +24,8 @@ import { MainLayoutComponent } from './main-layout.component';
     ProductManagementModule,
     ContactManagementModule,
     NewsManagementModule,
-    HomeManagementModule
+    HomeManagementModule,
+    MailManagementModule
   ],
   exports: [MainLayoutComponent],
 })

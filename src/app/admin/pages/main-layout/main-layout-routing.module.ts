@@ -1,13 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MainLayoutComponent } from './main-layout.component';
+import { AuthGuard } from '../../../../service/authguard.service';
+import { CategoryManagementComponent } from '../category-management/category-management.component';
+import { ContactManagementComponent } from '../contact-management/contact-management.component';
 import { HomeComponent } from '../home/home.component';
+import { MailManagementComponent } from '../mail-management/mail-management.component';
 import { NewsManagementComponent } from '../news-management/news-management.component';
 import { ProductManagementComponent } from '../product-management/product-management.component';
-import { AuthGuard } from '../../../../service/authguard.service';
-import { ContactManagementComponent } from '../contact-management/contact-management.component';
-import{CategoryManagementComponent} from '../category-management/category-management.component'
+import { MainLayoutComponent } from './main-layout.component';
 
 const routes: Routes = [
   {
@@ -34,6 +35,10 @@ const routes: Routes = [
       {
         path: 'category-management',
         component: CategoryManagementComponent,
+      },
+      {
+        path: 'mail-management',
+        component: MailManagementComponent,
       },
     ],
   },
